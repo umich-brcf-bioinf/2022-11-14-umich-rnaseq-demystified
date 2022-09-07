@@ -19,22 +19,22 @@ navbar:
       menu:
         - text: "Warming up"
           href: Module01_Warming_Up.html
-        - text: "Quality Control"
-          href: Module02a_QC.html
-        - text: "Cutadapt/MoreQC"
-          href: Module02b_Cutadapt_MoreQC.html
+        - text: "Sequence QC"
+          href: Module02a_Sequence_QC.html
+        - text: "Trimming"
+          href: Module02b_Trimming.html
     - text: "Alignment"
       menu:
         - text: "Reference Genomes"
-          href: Module03_Reference_Genomes.html
-        - text: "Alignment/Quantification (STAR/RSEM)"
-          href: Module04_Alignment.html
+          href: Module03a_Reference_Genomes.html
+        - text: "Alignment"
+          href: Module03b_Alignment.html
     - text: "Quantification"
       menu:
-        - text: "Count matrix / Alignment QC"
-          href: Module05a_MultiQC_and_Count_Matrix.html
+        - text: "Alignment QC and Quantification"
+          href: Module04_Alignment_QC_and_Quantification.html
         - text: "Optional: Additional details"
-          href: Module05b_Additional_Details.html
+          href: Module05_Additional_Details.html
   right:
     - text: "Groups/Model"
       menu:
