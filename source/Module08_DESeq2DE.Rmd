@@ -1,5 +1,5 @@
 ---
-title: "Module 08: Normalization and Model Fitting"
+title: "Module 08: DE Normalization and Modeling"
 author: "UM Bioinformatics Core"
 date: "`r Sys.Date()`"
 output:

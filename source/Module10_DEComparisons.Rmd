@@ -1,5 +1,5 @@
 ---
-title: "Module 10: Differential Expression Results"
+title: "Module 10: DE Testing"
 author: "UM Bioinformatics Core"
 date: "`r Sys.Date()`"
 output:
