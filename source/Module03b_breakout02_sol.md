@@ -29,7 +29,7 @@ pre {
 
 <br>
 
-We just learned about how to use RSEM & STAR, but now we need to align all of the rest of our samples to the reference genome. We'll use the concepts we've learned earlier in this breakout exercise.
+We just learned about how to use RSEM & STAR, but now we need to align all of the rest of our samples to the reference genome. In this breakout exercise, we'll build upon some concepts we've learned previously.
 
 <br>
 
@@ -43,9 +43,9 @@ We just learned about how to use RSEM & STAR, but now we need to align all of th
 
 <br>
 
-- Review what we learned about running RSEM + STAR, to construct an appropriate command for aligning one of our samples.
-- Use a bash variable in our alignment command to quickly and easily align samples 2-4.
-- View the output, and verify that we have the files we need.
+- Review what we've learned about running RSEM + STAR, to determine an appropriate command for aligning our samples.
+- Using what we've learned previously, create a script using this command to quickly and easily align the rest of our samples.
+- Run the script, view the output, and verify that we have the files we need.
 
 <br>
 
@@ -53,27 +53,7 @@ We just learned about how to use RSEM & STAR, but now we need to align all of th
 
 <br>
 
-One solution is to define a bash variable for the sample, use that variable in the alignment command, and then redefine the variable before repeating the command for each change .
-
-    # Define a variable $SAMPLE
-    SAMPLE=sample_B
-    rsem-calculate-expression --star --num-threads 1 --star-gzipped-read-file \
-    --star-output-genome-bam --keep-intermediate-files \
-    out_trimmed/${SAMPLE}_R1.trimmed.fastq.gz \
-    ../refs/GRCm38.102.chr19reduced \
-    out_rsem/${SAMPLE}
-    SAMPLE=sample_C
-    # Use the up arrow key to repeat the same command as above with the variable reassigned to sample_C
-    SAMPLE=sample_D
-    # Use the up arrow key to repeat the same command as above with the variable reassigned to sample_D
-    SAMPLE=sample_E
-    # Use the up arrow key to repeat the same command as above with the variable reassigned to sample_E
-    SAMPLE=sample_F
-    # Use the up arrow key to repeat the same command as above with the variable reassigned to sample_F
-
-<br>
-
-Another solution is to create a for-loop with our bash variable and alignment command. E.g.
+Based on our earlier breakout exercise, using a for-loop with our bash variable would look something like this:
 
     for SAMPLE in sample_B sample_C sample_D sample_E sample_F
     do
@@ -84,8 +64,48 @@ Another solution is to create a for-loop with our bash variable and alignment co
         out_rsem/${SAMPLE}
     done
 
+Place the appropriate code into a file using the `nano` editor to create the script, then execute the script.
+
+    # Use the nano editor to create a script
+    nano aligning_B-F.sh # Insert commands into editor, then close the file
+    # Run the script
+    bash aligning_B-F.sh
+
+Optional: Add execute permissions to the script before executing.
+
+If going this route, you can call the script directly, without calling bash.
+
+Note that since the script is in the current directory, you'll have to provide that additional contextual information when calling it (e.g. `./` to represent the current directory).
+
+    # Add execute permissions
+    chmod +x aligning_B-F.sh
+    # Run the script
+    ./aligning_B-F.sh
+
 <br>
 
-> Helper Hint: If suggesting a for-loop approach, it can be helpful to build up a "dry-run" command as a test case, to get learners to be more cognizant of what their code will do. Echoing filenames first might be a good suggestion.
+> Helper Hints: When using a for-loop approach, it can be helpful to slowly build up to the end result, sometimes using a "dry-run" command as a test case, to get learners to be more cognizant of what their code will do.
+>
+>    - Echoing filenames is an easy place to start.
+>    - Iterating over a single sample might also be helpful when testing.
+
+> Example echoing filenames:
+
+    for SAMPLE in sample_B sample_C sample_D sample_E sample_F
+    do
+        echo "in_file: out_trimmed/${SAMPLE}_R1.trimmed.fastq.gz"
+        echo "out_prefix: out_rsem/${SAMPLE}"
+    done
+
+> Example iterating over a single sample (sample_A, which we've already aligned prior to the breakout exercise)
+
+    for SAMPLE in sample_A
+    do
+        rsem-calculate-expression --star --num-threads 1 --star-gzipped-read-file \
+        --star-output-genome-bam --keep-intermediate-files \
+        out_trimmed/${SAMPLE}_R1.trimmed.fastq.gz \
+        ../refs/GRCm38.102.chr19reduced \
+        out_rsem/${SAMPLE}
+    done
 
 <br>
