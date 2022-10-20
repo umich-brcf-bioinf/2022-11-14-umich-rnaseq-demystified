@@ -229,7 +229,7 @@ It is important that you can see:
 <br/>
 
 ### Workshop topics at a glance
-![](images/wayfinder/wayfinder-01.png)
+![](images/wayfinder/wayfinder-Introduction.png)
 
 # Any questions?
  -

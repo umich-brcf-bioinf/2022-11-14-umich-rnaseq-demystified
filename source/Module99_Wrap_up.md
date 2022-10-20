@@ -38,7 +38,7 @@ a.external {
 We hope you now have more familiarity with key concepts, data types, tools, and how they all
 connect to enable gene expression analysis from bulk RNA-Seq data.
 
-![](images/wayfinder/wayfinder-99.png)
+![](images/wayfinder/wayfinder-Wrap_up.png)
 
 ---
 

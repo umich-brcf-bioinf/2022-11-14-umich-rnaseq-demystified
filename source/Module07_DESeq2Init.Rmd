@@ -48,7 +48,7 @@ library(DESeq2)
 
 Here we will proceed setting up the inputs needed to initialize DESeq2 before testing for differential expression.
 
-![](./images/wayfinder/wayfinder-07.png){width=75%}
+![](./images/wayfinder/wayfinder-DESeq2Init.png){width=75%}
 
 ---
 
