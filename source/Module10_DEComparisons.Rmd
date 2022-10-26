@@ -54,9 +54,6 @@ Now we test for differential expression between our groups of interest and retur
 
 ---
 
-> # Question {.unlisted .unnumbered}
-> Before we start, what do you think is the most challenging part of a differential expression analysis? Post in the thread on Slack.
-
 # Generating DE results
 
 Now that we have reviewed the plots by sample and determined that our data passed our quality control checks, specifically that the patterns we observe are likely due to our experimental treatments over technical or other confounding factors, we can focus on differential expression testing.

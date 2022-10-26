@@ -1,6 +1,6 @@
 # Simple check that items references in hrefs exist:
 # cd to root
-# show me how site hrefs overlap generated html files 
+# show me how site hrefs overlap generated html files
 # comm \
 #       <(find html/*.html -exec basename {} \; | sort) \
 #       <(egrep '^[^#].*href:' source/_site.yml | awk '{print $2}'| sort) \
@@ -38,21 +38,21 @@ navbar:
   right:
     - text: "Groups/Model"
       menu:
-        - text: "Introduction to DESeq2"
+        - text: "DE Introduction"
           href: Module06_DEAnalysisSetup.html
-        - text: "DESeq2 Initialization"
+        - text: "DE Initialization"
           href: Module07_DESeq2Init.html
-        - text: "Count Normalizations and DESeq2 model fitting"
+        - text: "DE Normalization and Modeling"
           href: Module08_DESeq2DE.html
     - text: "Expression plots"
       menu:
-        - text: "Sample Visualizations for QC"
+        - text: "Sample QC"
           href: Module09_SampleQCViz.html
     - text: "Diff Expression"
       menu:
-        - text: "Comparisons"
+        - text: "DE Testing"
           href: Module10_DEComparisons.html
-        - text: "DE Visiualization and Annotation"
+        - text: "DE Visualization and Annotation"
           href: Module11_DEVisualizations.html
         - text: "Bonus content"
           href: Module11X_BonusContent.html
