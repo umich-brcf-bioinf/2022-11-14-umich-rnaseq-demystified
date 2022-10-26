@@ -1,5 +1,5 @@
 ---
-title: "Module 07: DESeq2 Initialization"
+title: "Module 07: DE Initialization"
 author: "UM Bioinformatics Core"
 date: "`r Sys.Date()`"
 output:

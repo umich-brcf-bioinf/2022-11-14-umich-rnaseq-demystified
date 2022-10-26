@@ -1,5 +1,5 @@
 ---
-title: "Module 09: QC Visualizations"
+title: "Module 09: Sample QC"
 author: "UM Bioinformatics Core"
 date: "`r Sys.Date()`"
 output:

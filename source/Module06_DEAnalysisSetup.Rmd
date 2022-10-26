@@ -1,5 +1,5 @@
 ---
-title: "Module 06: Introduction"
+title: "Module 06: DE Introduction"
 author: "UM Bioinformatics Core"
 date: "`r Sys.Date()`"
 output:
