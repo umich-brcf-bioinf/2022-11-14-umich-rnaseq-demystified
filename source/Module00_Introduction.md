@@ -46,14 +46,9 @@ pre {
 | ![](images/Module00_headshots/headshot_cgates.jpg) | ![](images/Module00_headshots/headshot_mbradenb.jpg) | ![](images/Module00_headshots/headshot_rcavalca.jpg) | ![](images/Module00_headshots/headshot_trsaari.jpg) |
 |:-:|:-:|:-:|:-:|
 | **Chris** | **Marci** | **Raymond** | **Travis** |
-<!--
-| | | | |
-| ![](images/Module00_headshots/headshot_mccwen.jpg) | ![](images/Module00_headshots/headshot_damki.jpg) | ![](images/Module00_headshots/headshot_mkdohert.jpg) | ![](images/Module00_headshots/headshot_jrhemama.jpg) |
-|  **Crystal** | **Dana** | **Matt**| **Rhema** |
 | | | |
-| ![](images/Module00_headshots/headshot_dengkw.jpg) | ![](images/Module00_headshots/headshot_weishwu.jpg) |
-|  **Kaiwen** | **Weisheng** |
--->
+| ![](images/Module00_headshots/headshot_damki.jpg) | ![](images/Module00_headshots/headshot_grkenney.jpg) | ![](images/Module00_headshots/headshot_diaorch.jpg) |
+|  **Dana** |**Grace** | **Rucheng** |
 <br/>
 
 ## Workshop sponsors
@@ -229,7 +224,7 @@ It is important that you can see:
 <br/>
 
 ### Workshop topics at a glance
-![](images/wayfinder/wayfinder-01.png)
+![](images/wayfinder/wayfinder-Introduction.png)
 
 # Any questions?
  -

@@ -38,7 +38,7 @@ a.external {
 We hope you now have more familiarity with key concepts, data types, tools, and how they all
 connect to enable gene expression analysis from bulk RNA-Seq data.
 
-![](images/wayfinder/wayfinder-99.png)
+![](images/wayfinder/wayfinder-Wrap_up.png)
 
 ---
 
@@ -117,14 +117,9 @@ for 90 days.
 | ![](images/Module00_headshots/headshot_cgates.jpg) | ![](images/Module00_headshots/headshot_mbradenb.jpg) | ![](images/Module00_headshots/headshot_rcavalca.jpg) | ![](images/Module00_headshots/headshot_trsaari.jpg) |
 |:-:|:-:|:-:|:-:|
 | **Chris** | **Marci** | **Raymond** | **Travis** |
-<!--
-| | | | |
-| ![](images/Module00_headshots/headshot_mccwen.jpg) | ![](images/Module00_headshots/headshot_damki.jpg) | ![](images/Module00_headshots/headshot_mkdohert.jpg) | ![](images/Module00_headshots/headshot_jrhemama.jpg) |
-|  **Crystal** | **Dana** | **Matt**| **Rhema** |
 | | | |
-| ![](images/Module00_headshots/headshot_dengkw.jpg) | ![](images/Module00_headshots/headshot_weishwu.jpg) |
-|  **Kaiwen** | **Weisheng** |
--->
+| ![](images/Module00_headshots/headshot_damki.jpg) | ![](images/Module00_headshots/headshot_grkenney.jpg) | ![](images/Module00_headshots/headshot_diaorch.jpg) |
+|  **Dana** |**Grace** | **Rucheng** |
 <br/>
 
 
