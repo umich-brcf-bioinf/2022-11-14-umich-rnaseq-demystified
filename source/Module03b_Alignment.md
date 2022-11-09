@@ -178,8 +178,8 @@ rsem-prepare-reference --gtf ../refs/GRCm38.102.chr19reduced.gtf --star --num-th
 ```
 # First create a directory for the aligned results
 mkdir out_rsem
-# Construct an RSEM command to align SRR7777895 to our reference
-rsem-calculate-expression --star --num-threads 1 --star-gzipped-read-file --star-output-genome-bam --keep-intermediate-files out_trimmed/SRR7777895_R1.trimmed.fastq.gz ../refs/GRCm38.102.chr19reduced out_rsem/SRR7777895
+# Construct an RSEM command to align sample_A to our reference
+rsem-calculate-expression --star --num-threads 1 --star-gzipped-read-file --star-output-genome-bam --keep-intermediate-files out_trimmed/sample_A_R1.trimmed.fastq.gz ../refs/GRCm38.102.chr19reduced out_rsem/sample_A
 ```
 <br>
 <br>

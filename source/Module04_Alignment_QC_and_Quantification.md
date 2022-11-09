@@ -197,7 +197,7 @@ combine.py --help
 # Construct and execute the command to combine.py
 combine.py --input_path "out_rsem/*.genes.results" --output_file combined_counts.txt -c expected_count --id_columns gene_id
 # View the resulting count matrix
-less combined_counts.txt
+less -S combined_counts.txt
 ```
 
 <br>

@@ -14,7 +14,7 @@
 
 <title>Day 1 - Module 02: More QC</title>
 
-<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
@@ -158,11 +158,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -399,13 +403,13 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Module06_DEAnalysisSetup.html">Introduction to DESeq2</a>
+      <a href="Module06_DEAnalysisSetup.html">DE Introduction</a>
     </li>
     <li>
-      <a href="Module07_DESeq2Init.html">DESeq2 Initialization</a>
+      <a href="Module07_DESeq2Init.html">DE Initialization</a>
     </li>
     <li>
-      <a href="Module08_DESeq2DE.html">Count Normalizations and DESeq2 model fitting</a>
+      <a href="Module08_DESeq2DE.html">DE Normalization and Modeling</a>
     </li>
   </ul>
 </li>
@@ -417,7 +421,7 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Module09_SampleQCViz.html">Sample Visualizations for QC</a>
+      <a href="Module09_SampleQCViz.html">Sample QC</a>
     </li>
   </ul>
 </li>
@@ -429,10 +433,10 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Module10_DEComparisons.html">Comparisons</a>
+      <a href="Module10_DEComparisons.html">DE Testing</a>
     </li>
     <li>
-      <a href="Module11_DEVisualizations.html">DE Visiualization and Annotation</a>
+      <a href="Module11_DEVisualizations.html">DE Visualization and Annotation</a>
     </li>
     <li>
       <a href="Module11X_BonusContent.html">Bonus content</a>
@@ -473,7 +477,7 @@ pre {
 }
 </style>
 <div id="more-qc---cutadapt" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> More QC - Cutadapt</h1>
+<h1 number="1"><span class="header-section-number">1</span> More QC - Cutadapt</h1>
 <p>In this module we will learn:</p>
 <ul>
 <li>about the cutadapt software and its uses</li>
@@ -481,57 +485,32 @@ pre {
 <li>how to trim all of our samples using a bash variable</li>
 </ul>
 </div>
-<div id="differential-expression-workflow" class="section level1"
-number="2">
-<h1><span class="header-section-number">2</span> Differential Expression
-Workflow</h1>
-<p>As a reminder, our overall differential expression workflow is shown
-below. In this lesson, we will go over the highlighed portion of the
-workflow.</p>
-<p><img src="images/wayfinder/slides/Slide3.png" /> <br> <br> <br>
-<br></p>
+<div id="differential-expression-workflow" class="section level1" number="2">
+<h1 number="2"><span class="header-section-number">2</span> Differential Expression Workflow</h1>
+<p>As a reminder, our overall differential expression workflow is shown below. In this lesson, we will go over the highlighed portion of the workflow.</p>
+<p><img src="images/wayfinder/slides/Slide3.png" /> <br> <br> <br> <br></p>
 </div>
 <div id="cutadapt" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Cutadapt</h1>
-<p><a href="https://cutadapt.readthedocs.io/en/stable/">Cutadapt</a> is
-a very widely used read trimming and fastq processing software, cited
-several thousands of times. It’s written in python, and is user-friendly
-and reasonably fast.</p>
-<p>It is used for removing adapter sequences, primers, and poly-A tails,
-for trimming based on quality thresholds, for filtering reads based on
-characteristics, etc.</p>
-<p>It can operate on both FASTA and FASTQ file formats, and it supports
-compressed or raw inputs and outputs.</p>
-<p>Notably, cutadapt’s error-tolerant adapter trimming likely
-contributed greatly to its early popularity. We will use it to trim the
-adapters from our reads. Similar to earlier, we’ll discuss the details
-of cutadapt’s functionality and input/output files, before proceeding to
-an exercise where we can try running the software ourselves.</p>
+<h1 number="3"><span class="header-section-number">3</span> Cutadapt</h1>
+<p><a href="https://cutadapt.readthedocs.io/en/stable/">Cutadapt</a> is a very widely used read trimming and fastq processing software, cited several thousands of times. It’s written in python, and is user-friendly and reasonably fast.</p>
+<p>It is used for removing adapter sequences, primers, and poly-A tails, for trimming based on quality thresholds, for filtering reads based on characteristics, etc.</p>
+<p>It can operate on both FASTA and FASTQ file formats, and it supports compressed or raw inputs and outputs.</p>
+<p>Notably, cutadapt’s error-tolerant adapter trimming likely contributed greatly to its early popularity. We will use it to trim the adapters from our reads. Similar to earlier, we’ll discuss the details of cutadapt’s functionality and input/output files, before proceeding to an exercise where we can try running the software ourselves.</p>
 <div id="cutadapt-details" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Cutadapt details</h2>
-<p>Cutadapt’s input and output files are simple to understand given its
-stated purpose. Both input and output are fastq files - the input being
-the fastq files that need processing, and output being the fastq files
-after they’ve been processed. Depending on the parameters, chosen
-outputs often have shorter read lengths due to trimming processes and
-fewer total reads due to filtering.</p>
+<h2 number="3.1"><span class="header-section-number">3.1</span> Cutadapt details</h2>
+<p>Cutadapt’s input and output files are simple to understand given its stated purpose. Both input and output are fastq files - the input being the fastq files that need processing, and output being the fastq files after they’ve been processed. Depending on the parameters, chosen outputs often have shorter read lengths due to trimming processes and fewer total reads due to filtering.</p>
 <pre><code># Given the single-end input file:
-reads/SRR7777895_R1.fastq.gz
+reads/sample_A_R1.fastq.gz
 # Suitable output filename/paths:
-out_trimmed/SRR7777895_R1.trimmed.fastq.gz</code></pre>
-<p>As mentioned above, cutadapt has many capabilities. Depending on the
-parameters given, we can invoke different functionalities. Given our
-results from the previous QC module, we know that we need to trim
-adapters from the reads in our fastq files.</p>
+out_trimmed/sample_A_R1.trimmed.fastq.gz</code></pre>
+<p>As mentioned above, cutadapt has many capabilities. Depending on the parameters given, we can invoke different functionalities. Given our results from the previous QC module, we know that we need to trim adapters from the reads in our fastq files.</p>
 </div>
 <div id="cutadapt-exercise" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> Cutadapt
-Exercise</h2>
+<h2 number="3.2"><span class="header-section-number">3.2</span> Cutadapt Exercise</h2>
 <ol style="list-style-type: decimal">
 <li>Create a directory for our trimmed reads</li>
 <li>View the help page of the cutadapt tool</li>
-<li>Construct a cutadapt command to trim the adapters from paired-end
-reads</li>
+<li>Construct a cutadapt command to trim the adapters from paired-end reads</li>
 <li>View the output of cutadapt, and verify that it’s correct</li>
 </ol>
 <pre><code># Create a directory for the trimmed reads
@@ -540,36 +519,22 @@ mkdir out_trimmed
 cutadapt --help
 
 # Construct a cutadapt command to trim adapters from paired-end reads
-cutadapt -q 30 -m 20 -o out_trimmed/SRR7777895_R1.trimmed.fastq.gz ../reads/SRR7777895_R1.fastq.gz
+cutadapt -q 30 -m 20 -o out_trimmed/sample_A_R1.trimmed.fastq.gz ../reads/sample_A_R1.fastq.gz
 # View the output of cutadapt, (verify presence of output files and peek into the files)</code></pre>
-<p>At this point, we’ve run cutadapt on one of our samples. We could
-construct a series of similar commands by altering the sample names.
-However, there’s an easier way. For this, we’ll use a bash variable.</p>
+<p>At this point, we’ve run cutadapt on one of our samples. We could construct a series of similar commands by altering the sample names. However, there’s an easier way. For this, we’ll use a bash variable.</p>
 <p><br> <br></p>
 </div>
-<div id="cutadapt-all-samples-exercise-breakout" class="section level2"
-number="3.3">
-<h2><span class="header-section-number">3.3</span> Cutadapt All Samples
-Exercise (Breakout)</h2>
-<p>Before starting our breakout exercise, we should make sure that we
-are on the same page. Follow the link below:</p>
-<p><a href="Module02b_breakout01_ex.html">Link to Cutadapt breakout
-exercise</a></p>
+<div id="cutadapt-all-samples-exercise-breakout" class="section level2" number="3.3">
+<h2 number="3.3"><span class="header-section-number">3.3</span> Cutadapt All Samples Exercise (Breakout)</h2>
+<p>Before starting our breakout exercise, we should make sure that we are on the same page. Follow the link below:</p>
+<p><a href="Module02b_breakout01_ex.html">Link to Cutadapt breakout exercise</a></p>
 <p><br> <br></p>
-<p>Now that we’ve run cutadapt and trimmed the adapters from our reads,
-we will quickly re-run FastQC on these trimmed read FASTQs. This will
-confirm that we’ve successfully trimmed the adapters, and we’ll see that
-our FASTQ files are ready for sequencing. Since we’ve discussed the
-FastQC input/output and functionality in the previous module, we’ll go
-next to an exercise re-running FastQC on the trimmed read data</p>
+<p>Now that we’ve run cutadapt and trimmed the adapters from our reads, we will quickly re-run FastQC on these trimmed read FASTQs. This will confirm that we’ve successfully trimmed the adapters, and we’ll see that our FASTQ files are ready for sequencing. Since we’ve discussed the FastQC input/output and functionality in the previous module, we’ll go next to an exercise re-running FastQC on the trimmed read data</p>
 </div>
-<div id="re-running-fastqc-exercise" class="section level2"
-number="3.4">
-<h2><span class="header-section-number">3.4</span> Re-running FastQC
-Exercise:</h2>
+<div id="re-running-fastqc-exercise" class="section level2" number="3.4">
+<h2 number="3.4"><span class="header-section-number">3.4</span> Re-running FastQC Exercise:</h2>
 <ol style="list-style-type: decimal">
-<li>Construct and execute FastQC command to evaluate trimmed read FASTQ
-files</li>
+<li>Construct and execute FastQC command to evaluate trimmed read FASTQ files</li>
 <li>View the output (filenames)</li>
 </ol>
 <pre><code># We&#39;ll have to create an output directory first
@@ -580,24 +545,14 @@ fastqc -o out_fastqc_trimmed out_trimmed/*.fastq.gz
 # Then verify that the output files are present
 ls -l out_fastqc_trimmed</code></pre>
 <p><br></p>
-<p>Opening the HTML report, we see it is organized by the same modules
-and each plot has all samples for which FastQC was run. We can see the
-report confirms that the adapters have been trimmed from our
-sequence.</p>
+<p>Opening the HTML report, we see it is organized by the same modules and each plot has all samples for which FastQC was run. We can see the report confirms that the adapters have been trimmed from our sequence.</p>
 <p><br></p>
 <hr />
-<p>These materials have been adapted and extended from materials created
-by the <a href="http://bioinformatics.sph.harvard.edu/">Harvard Chan
-Bioinformatics Core (HBC)</a>. These are open access materials
-distributed under the terms of the <a
-href="http://creativecommons.org/licenses/by/4.0/">Creative Commons
-Attribution license (CC BY 4.0)</a>, which permits unrestricted use,
-distribution, and reproduction in any medium, provided the original
-author and source are credited.</p>
+<p>These materials have been adapted and extended from materials created by the <a href="http://bioinformatics.sph.harvard.edu/">Harvard Chan Bioinformatics Core (HBC)</a>. These are open access materials distributed under the terms of the <a href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution license (CC BY 4.0)</a>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</p>
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiRGF5IDEgLSBNb2R1bGUgMDI6IE1vcmUgUUMiCmF1dGhvcjogIlVNIEJpb2luZm9ybWF0aWNzIENvcmUiCm91dHB1dDoKICAgICAgICBodG1sX2RvY3VtZW50OgogICAgICAgICAgICBpbmNsdWRlczoKICAgICAgICAgICAgICAgIGluX2hlYWRlcjogaGVhZGVyLmh0bWwKICAgICAgICAgICAgdGhlbWU6IHBhcGVyCiAgICAgICAgICAgIHRvYzogdHJ1ZQogICAgICAgICAgICB0b2NfZGVwdGg6IDQKICAgICAgICAgICAgdG9jX2Zsb2F0OiB0cnVlCiAgICAgICAgICAgIG51bWJlcl9zZWN0aW9uczogdHJ1ZQogICAgICAgICAgICBmaWdfY2FwdGlvbjogdHJ1ZQogICAgICAgICAgICBtYXJrZG93bjogR0ZNCiAgICAgICAgICAgIGNvZGVfZG93bmxvYWQ6IHRydWUKLS0tCjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+CmJvZHl7IC8qIE5vcm1hbCAgKi8KICAgICAgZm9udC1zaXplOiAxNHB0OwogIH0KcHJlIHsKICBmb250LXNpemU6IDEycHQKfQo8L3N0eWxlPgoKIyBNb3JlIFFDIC0gQ3V0YWRhcHQKCkluIHRoaXMgbW9kdWxlIHdlIHdpbGwgbGVhcm46CgoqIGFib3V0IHRoZSBjdXRhZGFwdCBzb2Z0d2FyZSBhbmQgaXRzIHVzZXMKKiBob3cgdG8gdXNlIHRoZSBjdXRhZGFwdCB0b29sIGZvciB0cmltbWluZyBhZGFwdGVycwoqIGhvdyB0byB0cmltIGFsbCBvZiBvdXIgc2FtcGxlcyB1c2luZyBhIGJhc2ggdmFyaWFibGUKCiMgRGlmZmVyZW50aWFsIEV4cHJlc3Npb24gV29ya2Zsb3cKCkFzIGEgcmVtaW5kZXIsIG91ciBvdmVyYWxsIGRpZmZlcmVudGlhbCBleHByZXNzaW9uIHdvcmtmbG93IGlzIHNob3duIGJlbG93LiBJbiB0aGlzIGxlc3Nvbiwgd2Ugd2lsbCBnbyBvdmVyIHRoZSBoaWdobGlnaGVkIHBvcnRpb24gb2YgdGhlIHdvcmtmbG93LgoKIVtdKGltYWdlcy93YXlmaW5kZXIvd2F5ZmluZGVyLVRyaW1taW5nLnBuZykKPGJyPgo8YnI+Cjxicj4KPGJyPgoKIyBDdXRhZGFwdAoKW0N1dGFkYXB0XShodHRwczovL2N1dGFkYXB0LnJlYWR0aGVkb2NzLmlvL2VuL3N0YWJsZS8pIGlzIGEgdmVyeSB3aWRlbHkgdXNlZCByZWFkIHRyaW1taW5nIGFuZCBmYXN0cSBwcm9jZXNzaW5nIHNvZnR3YXJlLCBjaXRlZCBzZXZlcmFsIHRob3VzYW5kcyBvZiB0aW1lcy4gSXQncyB3cml0dGVuIGluIHB5dGhvbiwgYW5kIGlzIHVzZXItZnJpZW5kbHkgYW5kIHJlYXNvbmFibHkgZmFzdC4KCkl0IGlzIHVzZWQgZm9yIHJlbW92aW5nIGFkYXB0ZXIgc2VxdWVuY2VzLCBwcmltZXJzLCBhbmQgcG9seS1BIHRhaWxzLCBmb3IgdHJpbW1pbmcgYmFzZWQgb24gcXVhbGl0eSB0aHJlc2hvbGRzLCBmb3IgZmlsdGVyaW5nIHJlYWRzIGJhc2VkIG9uIGNoYXJhY3RlcmlzdGljcywgZXRjLgoKSXQgY2FuIG9wZXJhdGUgb24gYm90aCBGQVNUQSBhbmQgRkFTVFEgZmlsZSBmb3JtYXRzLCBhbmQgaXQgc3VwcG9ydHMgY29tcHJlc3NlZCBvciByYXcgaW5wdXRzIGFuZCBvdXRwdXRzLgoKTm90YWJseSwgY3V0YWRhcHQncyBlcnJvci10b2xlcmFudCBhZGFwdGVyIHRyaW1taW5nIGxpa2VseSBjb250cmlidXRlZCBncmVhdGx5IHRvIGl0cyBlYXJseSBwb3B1bGFyaXR5LiBXZSB3aWxsIHVzZSBpdCB0byB0cmltIHRoZSBhZGFwdGVycyBmcm9tIG91ciByZWFkcy4gU2ltaWxhciB0byBlYXJsaWVyLCB3ZSdsbCBkaXNjdXNzIHRoZSBkZXRhaWxzIG9mIGN1dGFkYXB0J3MgZnVuY3Rpb25hbGl0eSBhbmQgaW5wdXQvb3V0cHV0IGZpbGVzLCBiZWZvcmUgcHJvY2VlZGluZyB0byBhbiBleGVyY2lzZSB3aGVyZSB3ZSBjYW4gdHJ5IHJ1bm5pbmcgdGhlIHNvZnR3YXJlIG91cnNlbHZlcy4KCgojIyBDdXRhZGFwdCBkZXRhaWxzCgpDdXRhZGFwdCdzIGlucHV0IGFuZCBvdXRwdXQgZmlsZXMgYXJlIHNpbXBsZSB0byB1bmRlcnN0YW5kIGdpdmVuIGl0cyBzdGF0ZWQgcHVycG9zZS4gQm90aCBpbnB1dCBhbmQgb3V0cHV0IGFyZSBmYXN0cSBmaWxlcyAtIHRoZSBpbnB1dCBiZWluZyB0aGUgZmFzdHEgZmlsZXMgdGhhdCBuZWVkIHByb2Nlc3NpbmcsIGFuZCBvdXRwdXQgYmVpbmcgdGhlIGZhc3RxIGZpbGVzIGFmdGVyIHRoZXkndmUgYmVlbiBwcm9jZXNzZWQuIERlcGVuZGluZyBvbiB0aGUgcGFyYW1ldGVycywgY2hvc2VuIG91dHB1dHMgb2Z0ZW4gaGF2ZSBzaG9ydGVyIHJlYWQgbGVuZ3RocyBkdWUgdG8gdHJpbW1pbmcgcHJvY2Vzc2VzIGFuZCBmZXdlciB0b3RhbCByZWFkcyBkdWUgdG8gZmlsdGVyaW5nLgoKCiAgICAjIEdpdmVuIHRoZSBzaW5nbGUtZW5kIGlucHV0IGZpbGU6CiAgICByZWFkcy9TUlI3Nzc3ODk1X1IxLmZhc3RxLmd6CiAgICAjIFN1aXRhYmxlIG91dHB1dCBmaWxlbmFtZS9wYXRoczoKICAgIG91dF90cmltbWVkL1NSUjc3Nzc4OTVfUjEudHJpbW1lZC5mYXN0cS5negoKCkFzIG1lbnRpb25lZCBhYm92ZSwgY3V0YWRhcHQgaGFzIG1hbnkgY2FwYWJpbGl0aWVzLiBEZXBlbmRpbmcgb24gdGhlIHBhcmFtZXRlcnMgZ2l2ZW4sIHdlIGNhbiBpbnZva2UgZGlmZmVyZW50IGZ1bmN0aW9uYWxpdGllcy4gR2l2ZW4gb3VyIHJlc3VsdHMgZnJvbSB0aGUgcHJldmlvdXMgUUMgbW9kdWxlLCB3ZSBrbm93IHRoYXQgd2UgbmVlZCB0byB0cmltIGFkYXB0ZXJzIGZyb20gdGhlIHJlYWRzIGluIG91ciBmYXN0cSBmaWxlcy4KCgojIyBDdXRhZGFwdCBFeGVyY2lzZQoKMS4gQ3JlYXRlIGEgZGlyZWN0b3J5IGZvciBvdXIgdHJpbW1lZCByZWFkcwoyLiBWaWV3IHRoZSBoZWxwIHBhZ2Ugb2YgdGhlIGN1dGFkYXB0IHRvb2wKMy4gQ29uc3RydWN0IGEgY3V0YWRhcHQgY29tbWFuZCB0byB0cmltIHRoZSBhZGFwdGVycyBmcm9tIHBhaXJlZC1lbmQgcmVhZHMKNC4gVmlldyB0aGUgb3V0cHV0IG9mIGN1dGFkYXB0LCBhbmQgdmVyaWZ5IHRoYXQgaXQncyBjb3JyZWN0CgpgYGAKIyBDcmVhdGUgYSBkaXJlY3RvcnkgZm9yIHRoZSB0cmltbWVkIHJlYWRzCm1rZGlyIG91dF90cmltbWVkCiMgVmlldyB0aGUgaGVscCBwYWdlIG9mIEN1dGFkYXB0CmN1dGFkYXB0IC0taGVscAoKIyBDb25zdHJ1Y3QgYSBjdXRhZGFwdCBjb21tYW5kIHRvIHRyaW0gYWRhcHRlcnMgZnJvbSBwYWlyZWQtZW5kIHJlYWRzCmN1dGFkYXB0IC1xIDMwIC1tIDIwIC1vIG91dF90cmltbWVkL1NSUjc3Nzc4OTVfUjEudHJpbW1lZC5mYXN0cS5neiAuLi9yZWFkcy9TUlI3Nzc3ODk1X1IxLmZhc3RxLmd6CiMgVmlldyB0aGUgb3V0cHV0IG9mIGN1dGFkYXB0LCAodmVyaWZ5IHByZXNlbmNlIG9mIG91dHB1dCBmaWxlcyBhbmQgcGVlayBpbnRvIHRoZSBmaWxlcykKYGBgCgpBdCB0aGlzIHBvaW50LCB3ZSd2ZSBydW4gY3V0YWRhcHQgb24gb25lIG9mIG91ciBzYW1wbGVzLiBXZSBjb3VsZCBjb25zdHJ1Y3QgYSBzZXJpZXMgb2Ygc2ltaWxhciBjb21tYW5kcyBieSBhbHRlcmluZyB0aGUgc2FtcGxlIG5hbWVzLiBIb3dldmVyLCB0aGVyZSdzIGFuIGVhc2llciB3YXkuIEZvciB0aGlzLCB3ZSdsbCB1c2UgYSBiYXNoIHZhcmlhYmxlLgoKPGJyPgo8YnI+CgojIyBDdXRhZGFwdCBBbGwgU2FtcGxlcyBFeGVyY2lzZSAoQnJlYWtvdXQpCgpCZWZvcmUgc3RhcnRpbmcgb3VyIGJyZWFrb3V0IGV4ZXJjaXNlLCB3ZSBzaG91bGQgbWFrZSBzdXJlIHRoYXQgd2UgYXJlIG9uIHRoZSBzYW1lIHBhZ2UuIEZvbGxvdyB0aGUgbGluayBiZWxvdzoKCltMaW5rIHRvIEN1dGFkYXB0IGJyZWFrb3V0IGV4ZXJjaXNlXShNb2R1bGUwMmJfYnJlYWtvdXQwMV9leC5odG1sKQoKPGJyPgo8YnI+CgpOb3cgdGhhdCB3ZSd2ZSBydW4gY3V0YWRhcHQgYW5kIHRyaW1tZWQgdGhlIGFkYXB0ZXJzIGZyb20gb3VyIHJlYWRzLCB3ZSB3aWxsIHF1aWNrbHkgcmUtcnVuIEZhc3RRQyBvbiB0aGVzZSB0cmltbWVkIHJlYWQgRkFTVFFzLiBUaGlzIHdpbGwgY29uZmlybSB0aGF0IHdlJ3ZlIHN1Y2Nlc3NmdWxseSB0cmltbWVkIHRoZSBhZGFwdGVycywgYW5kIHdlJ2xsIHNlZSB0aGF0IG91ciBGQVNUUSBmaWxlcyBhcmUgcmVhZHkgZm9yIHNlcXVlbmNpbmcuIFNpbmNlIHdlJ3ZlIGRpc2N1c3NlZCB0aGUgRmFzdFFDIGlucHV0L291dHB1dCBhbmQgZnVuY3Rpb25hbGl0eSBpbiB0aGUgcHJldmlvdXMgbW9kdWxlLCB3ZSdsbCBnbyBuZXh0IHRvIGFuIGV4ZXJjaXNlIHJlLXJ1bm5pbmcgRmFzdFFDIG9uIHRoZSB0cmltbWVkIHJlYWQgZGF0YQoKIyMgUmUtcnVubmluZyBGYXN0UUMgRXhlcmNpc2U6CgoxLiBDb25zdHJ1Y3QgYW5kIGV4ZWN1dGUgRmFzdFFDIGNvbW1hbmQgdG8gZXZhbHVhdGUgdHJpbW1lZCByZWFkIEZBU1RRIGZpbGVzCjIuIFZpZXcgdGhlIG91dHB1dCAoZmlsZW5hbWVzKQoKYGBgCiMgV2UnbGwgaGF2ZSB0byBjcmVhdGUgYW4gb3V0cHV0IGRpcmVjdG9yeSBmaXJzdApta2RpciBvdXRfZmFzdHFjX3RyaW1tZWQKIyBDb25zdHJ1Y3QgdGhlIGZhc3RxYyBjb21tYW5kCmZhc3RxYyAtbyBvdXRfZmFzdHFjX3RyaW1tZWQgb3V0X3RyaW1tZWQvKi5mYXN0cS5negojIEV4ZWN1dGUgdGhlIGNvbW1hbmQKIyBUaGVuIHZlcmlmeSB0aGF0IHRoZSBvdXRwdXQgZmlsZXMgYXJlIHByZXNlbnQKbHMgLWwgb3V0X2Zhc3RxY190cmltbWVkCmBgYAoKPGJyPgoKT3BlbmluZyB0aGUgSFRNTCByZXBvcnQsIHdlIHNlZSBpdCBpcyBvcmdhbml6ZWQgYnkgdGhlIHNhbWUgbW9kdWxlcyBhbmQgZWFjaCBwbG90IGhhcyBhbGwgc2FtcGxlcyBmb3Igd2hpY2ggRmFzdFFDIHdhcyBydW4uIFdlIGNhbiBzZWUgdGhlIHJlcG9ydCBjb25maXJtcyB0aGF0IHRoZSBhZGFwdGVycyBoYXZlIGJlZW4gdHJpbW1lZCBmcm9tIG91ciBzZXF1ZW5jZS4KCjxicj4KCi0tLQoKVGhlc2UgbWF0ZXJpYWxzIGhhdmUgYmVlbiBhZGFwdGVkIGFuZCBleHRlbmRlZCBmcm9tIG1hdGVyaWFscyBjcmVhdGVkIGJ5IHRoZSBbSGFydmFyZCBDaGFuIEJpb2luZm9ybWF0aWNzIENvcmUgKEhCQyldKGh0dHA6Ly9iaW9pbmZvcm1hdGljcy5zcGguaGFydmFyZC5lZHUvKS4gVGhlc2UgYXJlIG9wZW4gYWNjZXNzIG1hdGVyaWFscyBkaXN0cmlidXRlZCB1bmRlciB0aGUgdGVybXMgb2YgdGhlIFtDcmVhdGl2ZSBDb21tb25zIEF0dHJpYnV0aW9uIGxpY2Vuc2UgKENDIEJZIDQuMCldKGh0dHA6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LzQuMC8pLCB3aGljaCBwZXJtaXRzIHVucmVzdHJpY3RlZCB1c2UsIGRpc3RyaWJ1dGlvbiwgYW5kIHJlcHJvZHVjdGlvbiBpbiBhbnkgbWVkaXVtLCBwcm92aWRlZCB0aGUgb3JpZ2luYWwgYXV0aG9yIGFuZCBzb3VyY2UgYXJlIGNyZWRpdGVkLgo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiRGF5IDEgLSBNb2R1bGUgMDI6IE1vcmUgUUMiCmF1dGhvcjogIlVNIEJpb2luZm9ybWF0aWNzIENvcmUiCm91dHB1dDoKICAgICAgICBodG1sX2RvY3VtZW50OgogICAgICAgICAgICBpbmNsdWRlczoKICAgICAgICAgICAgICAgIGluX2hlYWRlcjogaGVhZGVyLmh0bWwKICAgICAgICAgICAgdGhlbWU6IHBhcGVyCiAgICAgICAgICAgIHRvYzogdHJ1ZQogICAgICAgICAgICB0b2NfZGVwdGg6IDQKICAgICAgICAgICAgdG9jX2Zsb2F0OiB0cnVlCiAgICAgICAgICAgIG51bWJlcl9zZWN0aW9uczogdHJ1ZQogICAgICAgICAgICBmaWdfY2FwdGlvbjogdHJ1ZQogICAgICAgICAgICBtYXJrZG93bjogR0ZNCiAgICAgICAgICAgIGNvZGVfZG93bmxvYWQ6IHRydWUKLS0tCjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+CmJvZHl7IC8qIE5vcm1hbCAgKi8KICAgICAgZm9udC1zaXplOiAxNHB0OwogIH0KcHJlIHsKICBmb250LXNpemU6IDEycHQKfQo8L3N0eWxlPgoKIyBNb3JlIFFDIC0gQ3V0YWRhcHQKCkluIHRoaXMgbW9kdWxlIHdlIHdpbGwgbGVhcm46CgoqIGFib3V0IHRoZSBjdXRhZGFwdCBzb2Z0d2FyZSBhbmQgaXRzIHVzZXMKKiBob3cgdG8gdXNlIHRoZSBjdXRhZGFwdCB0b29sIGZvciB0cmltbWluZyBhZGFwdGVycwoqIGhvdyB0byB0cmltIGFsbCBvZiBvdXIgc2FtcGxlcyB1c2luZyBhIGJhc2ggdmFyaWFibGUKCiMgRGlmZmVyZW50aWFsIEV4cHJlc3Npb24gV29ya2Zsb3cKCkFzIGEgcmVtaW5kZXIsIG91ciBvdmVyYWxsIGRpZmZlcmVudGlhbCBleHByZXNzaW9uIHdvcmtmbG93IGlzIHNob3duIGJlbG93LiBJbiB0aGlzIGxlc3Nvbiwgd2Ugd2lsbCBnbyBvdmVyIHRoZSBoaWdobGlnaGVkIHBvcnRpb24gb2YgdGhlIHdvcmtmbG93LgoKIVtdKGltYWdlcy93YXlmaW5kZXIvd2F5ZmluZGVyLVRyaW1taW5nLnBuZykKPGJyPgo8YnI+Cjxicj4KPGJyPgoKIyBDdXRhZGFwdAoKW0N1dGFkYXB0XShodHRwczovL2N1dGFkYXB0LnJlYWR0aGVkb2NzLmlvL2VuL3N0YWJsZS8pIGlzIGEgdmVyeSB3aWRlbHkgdXNlZCByZWFkIHRyaW1taW5nIGFuZCBmYXN0cSBwcm9jZXNzaW5nIHNvZnR3YXJlLCBjaXRlZCBzZXZlcmFsIHRob3VzYW5kcyBvZiB0aW1lcy4gSXQncyB3cml0dGVuIGluIHB5dGhvbiwgYW5kIGlzIHVzZXItZnJpZW5kbHkgYW5kIHJlYXNvbmFibHkgZmFzdC4KCkl0IGlzIHVzZWQgZm9yIHJlbW92aW5nIGFkYXB0ZXIgc2VxdWVuY2VzLCBwcmltZXJzLCBhbmQgcG9seS1BIHRhaWxzLCBmb3IgdHJpbW1pbmcgYmFzZWQgb24gcXVhbGl0eSB0aHJlc2hvbGRzLCBmb3IgZmlsdGVyaW5nIHJlYWRzIGJhc2VkIG9uIGNoYXJhY3RlcmlzdGljcywgZXRjLgoKSXQgY2FuIG9wZXJhdGUgb24gYm90aCBGQVNUQSBhbmQgRkFTVFEgZmlsZSBmb3JtYXRzLCBhbmQgaXQgc3VwcG9ydHMgY29tcHJlc3NlZCBvciByYXcgaW5wdXRzIGFuZCBvdXRwdXRzLgoKTm90YWJseSwgY3V0YWRhcHQncyBlcnJvci10b2xlcmFudCBhZGFwdGVyIHRyaW1taW5nIGxpa2VseSBjb250cmlidXRlZCBncmVhdGx5IHRvIGl0cyBlYXJseSBwb3B1bGFyaXR5LiBXZSB3aWxsIHVzZSBpdCB0byB0cmltIHRoZSBhZGFwdGVycyBmcm9tIG91ciByZWFkcy4gU2ltaWxhciB0byBlYXJsaWVyLCB3ZSdsbCBkaXNjdXNzIHRoZSBkZXRhaWxzIG9mIGN1dGFkYXB0J3MgZnVuY3Rpb25hbGl0eSBhbmQgaW5wdXQvb3V0cHV0IGZpbGVzLCBiZWZvcmUgcHJvY2VlZGluZyB0byBhbiBleGVyY2lzZSB3aGVyZSB3ZSBjYW4gdHJ5IHJ1bm5pbmcgdGhlIHNvZnR3YXJlIG91cnNlbHZlcy4KCgojIyBDdXRhZGFwdCBkZXRhaWxzCgpDdXRhZGFwdCdzIGlucHV0IGFuZCBvdXRwdXQgZmlsZXMgYXJlIHNpbXBsZSB0byB1bmRlcnN0YW5kIGdpdmVuIGl0cyBzdGF0ZWQgcHVycG9zZS4gQm90aCBpbnB1dCBhbmQgb3V0cHV0IGFyZSBmYXN0cSBmaWxlcyAtIHRoZSBpbnB1dCBiZWluZyB0aGUgZmFzdHEgZmlsZXMgdGhhdCBuZWVkIHByb2Nlc3NpbmcsIGFuZCBvdXRwdXQgYmVpbmcgdGhlIGZhc3RxIGZpbGVzIGFmdGVyIHRoZXkndmUgYmVlbiBwcm9jZXNzZWQuIERlcGVuZGluZyBvbiB0aGUgcGFyYW1ldGVycywgY2hvc2VuIG91dHB1dHMgb2Z0ZW4gaGF2ZSBzaG9ydGVyIHJlYWQgbGVuZ3RocyBkdWUgdG8gdHJpbW1pbmcgcHJvY2Vzc2VzIGFuZCBmZXdlciB0b3RhbCByZWFkcyBkdWUgdG8gZmlsdGVyaW5nLgoKCiAgICAjIEdpdmVuIHRoZSBzaW5nbGUtZW5kIGlucHV0IGZpbGU6CiAgICByZWFkcy9zYW1wbGVfQV9SMS5mYXN0cS5negogICAgIyBTdWl0YWJsZSBvdXRwdXQgZmlsZW5hbWUvcGF0aHM6CiAgICBvdXRfdHJpbW1lZC9zYW1wbGVfQV9SMS50cmltbWVkLmZhc3RxLmd6CgoKQXMgbWVudGlvbmVkIGFib3ZlLCBjdXRhZGFwdCBoYXMgbWFueSBjYXBhYmlsaXRpZXMuIERlcGVuZGluZyBvbiB0aGUgcGFyYW1ldGVycyBnaXZlbiwgd2UgY2FuIGludm9rZSBkaWZmZXJlbnQgZnVuY3Rpb25hbGl0aWVzLiBHaXZlbiBvdXIgcmVzdWx0cyBmcm9tIHRoZSBwcmV2aW91cyBRQyBtb2R1bGUsIHdlIGtub3cgdGhhdCB3ZSBuZWVkIHRvIHRyaW0gYWRhcHRlcnMgZnJvbSB0aGUgcmVhZHMgaW4gb3VyIGZhc3RxIGZpbGVzLgoKCiMjIEN1dGFkYXB0IEV4ZXJjaXNlCgoxLiBDcmVhdGUgYSBkaXJlY3RvcnkgZm9yIG91ciB0cmltbWVkIHJlYWRzCjIuIFZpZXcgdGhlIGhlbHAgcGFnZSBvZiB0aGUgY3V0YWRhcHQgdG9vbAozLiBDb25zdHJ1Y3QgYSBjdXRhZGFwdCBjb21tYW5kIHRvIHRyaW0gdGhlIGFkYXB0ZXJzIGZyb20gcGFpcmVkLWVuZCByZWFkcwo0LiBWaWV3IHRoZSBvdXRwdXQgb2YgY3V0YWRhcHQsIGFuZCB2ZXJpZnkgdGhhdCBpdCdzIGNvcnJlY3QKCmBgYAojIENyZWF0ZSBhIGRpcmVjdG9yeSBmb3IgdGhlIHRyaW1tZWQgcmVhZHMKbWtkaXIgb3V0X3RyaW1tZWQKIyBWaWV3IHRoZSBoZWxwIHBhZ2Ugb2YgQ3V0YWRhcHQKY3V0YWRhcHQgLS1oZWxwCgojIENvbnN0cnVjdCBhIGN1dGFkYXB0IGNvbW1hbmQgdG8gdHJpbSBhZGFwdGVycyBmcm9tIHBhaXJlZC1lbmQgcmVhZHMKY3V0YWRhcHQgLXEgMzAgLW0gMjAgLW8gb3V0X3RyaW1tZWQvc2FtcGxlX0FfUjEudHJpbW1lZC5mYXN0cS5neiAuLi9yZWFkcy9zYW1wbGVfQV9SMS5mYXN0cS5negojIFZpZXcgdGhlIG91dHB1dCBvZiBjdXRhZGFwdCwgKHZlcmlmeSBwcmVzZW5jZSBvZiBvdXRwdXQgZmlsZXMgYW5kIHBlZWsgaW50byB0aGUgZmlsZXMpCmBgYAoKQXQgdGhpcyBwb2ludCwgd2UndmUgcnVuIGN1dGFkYXB0IG9uIG9uZSBvZiBvdXIgc2FtcGxlcy4gV2UgY291bGQgY29uc3RydWN0IGEgc2VyaWVzIG9mIHNpbWlsYXIgY29tbWFuZHMgYnkgYWx0ZXJpbmcgdGhlIHNhbXBsZSBuYW1lcy4gSG93ZXZlciwgdGhlcmUncyBhbiBlYXNpZXIgd2F5LiBGb3IgdGhpcywgd2UnbGwgdXNlIGEgYmFzaCB2YXJpYWJsZS4KCjxicj4KPGJyPgoKIyMgQ3V0YWRhcHQgQWxsIFNhbXBsZXMgRXhlcmNpc2UgKEJyZWFrb3V0KQoKQmVmb3JlIHN0YXJ0aW5nIG91ciBicmVha291dCBleGVyY2lzZSwgd2Ugc2hvdWxkIG1ha2Ugc3VyZSB0aGF0IHdlIGFyZSBvbiB0aGUgc2FtZSBwYWdlLiBGb2xsb3cgdGhlIGxpbmsgYmVsb3c6CgpbTGluayB0byBDdXRhZGFwdCBicmVha291dCBleGVyY2lzZV0oTW9kdWxlMDJiX2JyZWFrb3V0MDFfZXguaHRtbCkKCjxicj4KPGJyPgoKTm93IHRoYXQgd2UndmUgcnVuIGN1dGFkYXB0IGFuZCB0cmltbWVkIHRoZSBhZGFwdGVycyBmcm9tIG91ciByZWFkcywgd2Ugd2lsbCBxdWlja2x5IHJlLXJ1biBGYXN0UUMgb24gdGhlc2UgdHJpbW1lZCByZWFkIEZBU1RRcy4gVGhpcyB3aWxsIGNvbmZpcm0gdGhhdCB3ZSd2ZSBzdWNjZXNzZnVsbHkgdHJpbW1lZCB0aGUgYWRhcHRlcnMsIGFuZCB3ZSdsbCBzZWUgdGhhdCBvdXIgRkFTVFEgZmlsZXMgYXJlIHJlYWR5IGZvciBzZXF1ZW5jaW5nLiBTaW5jZSB3ZSd2ZSBkaXNjdXNzZWQgdGhlIEZhc3RRQyBpbnB1dC9vdXRwdXQgYW5kIGZ1bmN0aW9uYWxpdHkgaW4gdGhlIHByZXZpb3VzIG1vZHVsZSwgd2UnbGwgZ28gbmV4dCB0byBhbiBleGVyY2lzZSByZS1ydW5uaW5nIEZhc3RRQyBvbiB0aGUgdHJpbW1lZCByZWFkIGRhdGEKCiMjIFJlLXJ1bm5pbmcgRmFzdFFDIEV4ZXJjaXNlOgoKMS4gQ29uc3RydWN0IGFuZCBleGVjdXRlIEZhc3RRQyBjb21tYW5kIHRvIGV2YWx1YXRlIHRyaW1tZWQgcmVhZCBGQVNUUSBmaWxlcwoyLiBWaWV3IHRoZSBvdXRwdXQgKGZpbGVuYW1lcykKCmBgYAojIFdlJ2xsIGhhdmUgdG8gY3JlYXRlIGFuIG91dHB1dCBkaXJlY3RvcnkgZmlyc3QKbWtkaXIgb3V0X2Zhc3RxY190cmltbWVkCiMgQ29uc3RydWN0IHRoZSBmYXN0cWMgY29tbWFuZApmYXN0cWMgLW8gb3V0X2Zhc3RxY190cmltbWVkIG91dF90cmltbWVkLyouZmFzdHEuZ3oKIyBFeGVjdXRlIHRoZSBjb21tYW5kCiMgVGhlbiB2ZXJpZnkgdGhhdCB0aGUgb3V0cHV0IGZpbGVzIGFyZSBwcmVzZW50CmxzIC1sIG91dF9mYXN0cWNfdHJpbW1lZApgYGAKCjxicj4KCk9wZW5pbmcgdGhlIEhUTUwgcmVwb3J0LCB3ZSBzZWUgaXQgaXMgb3JnYW5pemVkIGJ5IHRoZSBzYW1lIG1vZHVsZXMgYW5kIGVhY2ggcGxvdCBoYXMgYWxsIHNhbXBsZXMgZm9yIHdoaWNoIEZhc3RRQyB3YXMgcnVuLiBXZSBjYW4gc2VlIHRoZSByZXBvcnQgY29uZmlybXMgdGhhdCB0aGUgYWRhcHRlcnMgaGF2ZSBiZWVuIHRyaW1tZWQgZnJvbSBvdXIgc2VxdWVuY2UuCgo8YnI+CgotLS0KClRoZXNlIG1hdGVyaWFscyBoYXZlIGJlZW4gYWRhcHRlZCBhbmQgZXh0ZW5kZWQgZnJvbSBtYXRlcmlhbHMgY3JlYXRlZCBieSB0aGUgW0hhcnZhcmQgQ2hhbiBCaW9pbmZvcm1hdGljcyBDb3JlIChIQkMpXShodHRwOi8vYmlvaW5mb3JtYXRpY3Muc3BoLmhhcnZhcmQuZWR1LykuIFRoZXNlIGFyZSBvcGVuIGFjY2VzcyBtYXRlcmlhbHMgZGlzdHJpYnV0ZWQgdW5kZXIgdGhlIHRlcm1zIG9mIHRoZSBbQ3JlYXRpdmUgQ29tbW9ucyBBdHRyaWJ1dGlvbiBsaWNlbnNlIChDQyBCWSA0LjApXShodHRwOi8vY3JlYXRpdmVjb21tb25zLm9yZy9saWNlbnNlcy9ieS80LjAvKSwgd2hpY2ggcGVybWl0cyB1bnJlc3RyaWN0ZWQgdXNlLCBkaXN0cmlidXRpb24sIGFuZCByZXByb2R1Y3Rpb24gaW4gYW55IG1lZGl1bSwgcHJvdmlkZWQgdGhlIG9yaWdpbmFsIGF1dGhvciBhbmQgc291cmNlIGFyZSBjcmVkaXRlZC4K</div>
 
 
 </div>

@@ -29,7 +29,7 @@ pre {
 
 <br>
 
-We just learned about how to use RSEM & STAR, but now we need to align all of the rest of our samples to the reference genome. We'll use the concepts we've learned earlier in this breakout exercise.
+We just learned about how to use RSEM & STAR, but now we need to align all of the rest of our samples to the reference genome. In this breakout exercise, we'll build upon some concepts we've learned previously.
 
 <br>
 
@@ -43,8 +43,8 @@ We just learned about how to use RSEM & STAR, but now we need to align all of th
 
 <br>
 
-- Review what we learned about running RSEM + STAR, to construct an appropriate command for aligning one of our samples.
-- Use a bash variable in our alignment command to quickly and easily align samples 2-4.
-- View the output, and verify that we have the files we need.
+- Review what we've learned about running RSEM + STAR, to determine an appropriate command for aligning our samples.
+- Using what we've learned previously, create a script using this command to quickly and easily align the rest of our samples.
+- Run the script, view the output, and verify that we have the files we need.
 
 <br>

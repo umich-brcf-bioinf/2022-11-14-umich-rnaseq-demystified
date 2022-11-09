@@ -14,7 +14,7 @@
 
 <title>Day 1 - Module 01: Warming up</title>
 
-<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
@@ -158,11 +158,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -399,13 +403,13 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Module06_DEAnalysisSetup.html">Introduction to DESeq2</a>
+      <a href="Module06_DEAnalysisSetup.html">DE Introduction</a>
     </li>
     <li>
-      <a href="Module07_DESeq2Init.html">DESeq2 Initialization</a>
+      <a href="Module07_DESeq2Init.html">DE Initialization</a>
     </li>
     <li>
-      <a href="Module08_DESeq2DE.html">Count Normalizations and DESeq2 model fitting</a>
+      <a href="Module08_DESeq2DE.html">DE Normalization and Modeling</a>
     </li>
   </ul>
 </li>
@@ -417,7 +421,7 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Module09_SampleQCViz.html">Sample Visualizations for QC</a>
+      <a href="Module09_SampleQCViz.html">Sample QC</a>
     </li>
   </ul>
 </li>
@@ -429,10 +433,10 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Module10_DEComparisons.html">Comparisons</a>
+      <a href="Module10_DEComparisons.html">DE Testing</a>
     </li>
     <li>
-      <a href="Module11_DEVisualizations.html">DE Visiualization and Annotation</a>
+      <a href="Module11_DEVisualizations.html">DE Visualization and Annotation</a>
     </li>
     <li>
       <a href="Module11X_BonusContent.html">Bonus content</a>
@@ -473,7 +477,7 @@ pre {
 }
 </style>
 <div id="warming-up" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> Warming Up</h1>
+<h1 number="1"><span class="header-section-number">1</span> Warming Up</h1>
 <p>In this module, we will:</p>
 <ul>
 <li>cover basic materials needed</li>
@@ -481,13 +485,11 @@ pre {
 <li>prepare for later modules</li>
 </ul>
 <div id="building-blocks" class="section level2" number="1.1">
-<h2><span class="header-section-number">1.1</span> Building Blocks</h2>
-<p><br> <br> <br> <img src="images/building-blocks.png" width="800" />
-<br> <br> <br></p>
+<h2 number="1.1"><span class="header-section-number">1.1</span> Building Blocks</h2>
+<p><br> <br> <br> <img src="images/building-blocks.png" width="800" /> <br> <br> <br></p>
 </div>
 <div id="example-files-exercise" class="section level2" number="1.2">
-<h2><span class="header-section-number">1.2</span> Example Files
-Exercise:</h2>
+<h2 number="1.2"><span class="header-section-number">1.2</span> Example Files Exercise:</h2>
 <ol style="list-style-type: decimal">
 <li>Download the zipped archive from the slack channel</li>
 <li>Locate, move (if desired), and unzip it</li>
@@ -496,13 +498,11 @@ Exercise:</h2>
 <p><br> <br> <br> <br> <br> <br></p>
 </div>
 <div id="local-vs-remote-exercise" class="section level2" number="1.3">
-<h2><span class="header-section-number">1.3</span> Local vs Remote
-Exercise:</h2>
+<h2 number="1.3"><span class="header-section-number">1.3</span> Local vs Remote Exercise:</h2>
 <ol style="list-style-type: decimal">
 <li>Become familiar with the appearance of the local shell</li>
 <li>Briefly explore your local files (optional)</li>
-<li>Log in to the aws instance with
-<code>ssh &lt;username&gt;@bfx-workshop01.med.umich.edu</code></li>
+<li>Log in to the aws instance with <code>ssh &lt;username&gt;@bfx-workshop01.med.umich.edu</code></li>
 <li>Become familiar with appearance of the remote shell</li>
 <li>Use <code>ls</code> to view references</li>
 <li>Use <code>ls</code> to view input fastq files</li>
@@ -524,8 +524,7 @@ mkdir ~/RSD_Shell/analysis</code></pre>
 <p><br> <br> <br></p>
 <details>
 <summary>
-Click here for demonstration comparing local Windows command prompt vs
-remote (AWS)
+Click here for demonstration comparing local Windows command prompt vs remote (AWS)
 </summary>
 <p><img src="images/local_v_remote.gif" width="800" /></p>
 </details>
@@ -534,93 +533,39 @@ remote (AWS)
 <summary>
 Click here for more info about retrieving sequences from SRA
 </summary>
-<p>The Sequence Read Archive (SRA) is an immense source of
-publicly-available high-throughput sequencing data, hosted by the NIH’s
-National Center for Biotechnology Information (NCBI). It also contains
-data from the European Bioinformatics Institute (EMBL-EBI), and the DNA
-Data Bank of Japan (DDBJ).</p>
-<p>These data can be useful for validating experimental results, and
-they can also allow for the savvy researcher to leverage this data to
-shed light on their own research questions.</p>
-<p>In these exercises, we’re using data from SRA to provide a good
-example of an RNASeq dataset, and also to demonstrate the process of
-validating experimental results of a published article, starting from
-the raw sequencing data.</p>
-<p>Below we provide some instruction and suggested starting points for
-each of the steps you’d take to retrieve sequence data from SRA for
-yourself. Generally, the steps are:</p>
+<p>The Sequence Read Archive (SRA) is an immense source of publicly-available high-throughput sequencing data, hosted by the NIH’s National Center for Biotechnology Information (NCBI). It also contains data from the European Bioinformatics Institute (EMBL-EBI), and the DNA Data Bank of Japan (DDBJ).</p>
+<p>These data can be useful for validating experimental results, and they can also allow for the savvy researcher to leverage this data to shed light on their own research questions.</p>
+<p>In these exercises, we’re using data from SRA to provide a good example of an RNASeq dataset, and also to demonstrate the process of validating experimental results of a published article, starting from the raw sequencing data.</p>
+<p>Below we provide some instruction and suggested starting points for each of the steps you’d take to retrieve sequence data from SRA for yourself. Generally, the steps are:</p>
 <ul>
 <li>Install and configure the SRA Toolkit software</li>
 <li>Find your dataset(s) of interest</li>
 <li>Download your sequences using SRA Toolkit</li>
 </ul>
-<div id="installingconfiguring-sra-toolkit" class="section level3"
-number="1.3.1">
-<h3><span class="header-section-number">1.3.1</span>
-Installing/Configuring SRA Toolkit</h3>
-<p>We recommend using High Performance Compute (HPC) resources if you
-want to perform an analysis on your own. At the University of Michigan,
-Advanced Research Computing (ARC) provides these resources, one you may
-hear of often is known as “The Great Lakes Cluster”. There, they provide
-a software module <code>sratoolkit</code> that you can use. This way,
-the software is already installed for you! Then it is very easy to load
-this module to give access to the software.</p>
+<div id="installingconfiguring-sra-toolkit" class="section level3" number="1.3.1">
+<h3 number="1.3.1"><span class="header-section-number">1.3.1</span> Installing/Configuring SRA Toolkit</h3>
+<p>We recommend using High Performance Compute (HPC) resources if you want to perform an analysis on your own. At the University of Michigan, Advanced Research Computing (ARC) provides these resources, one you may hear of often is known as “The Great Lakes Cluster”. There, they provide a software module <code>sratoolkit</code> that you can use. This way, the software is already installed for you! Then it is very easy to load this module to give access to the software.</p>
 <pre><code>#You must load the Bioinformatics module, then sratoolkit
 module load Bioinformatics
 module load sratoolkit</code></pre>
-<p>After the software is available, another important step is to
-configure it. There is a <a
-href="https://github.com/ncbi/sra-tools/wiki/03.-Quick-Toolkit-Configuration">helpful
-page here about configuration</a>. The most important detail will
-probably be to ensure that you set the cache location to somewhere with
-plentiful storage space.</p>
+<p>After the software is available, another important step is to configure it. There is a <a href="https://github.com/ncbi/sra-tools/wiki/03.-Quick-Toolkit-Configuration">helpful page here about configuration</a>. The most important detail will probably be to ensure that you set the cache location to somewhere with plentiful storage space.</p>
 <blockquote>
-<p>Note: On Great Lakes, the cache will likely be automatically be set
-to your home directory. This can be a problem, since user home
-directories have less than 100GB available. Setting this to the <a
-href="https://arc.umich.edu/scratch-storage/">scratch space</a> might be
-a good option.</p>
+<p>Note: On Great Lakes, the cache will likely be automatically be set to your home directory. This can be a problem, since user home directories have less than 100GB available. Setting this to the <a href="https://arc.umich.edu/scratch-storage/">scratch space</a> might be a good option.</p>
 </blockquote>
 </div>
-<div id="finding-datasets-of-interest" class="section level3"
-number="1.3.2">
-<h3><span class="header-section-number">1.3.2</span> Finding dataset(s)
-of interest:</h3>
-<p>NCBI has some <a
-href="https://www.ncbi.nlm.nih.gov/sra/docs/srasearch/#basic-search-in-sra">useful
-help pages here</a></p>
-<p>If you already have e.g. your relevant project accession ID, and want
-to get associated run accession IDs, you may also find it useful to use
-the <a href="https://www.ncbi.nlm.nih.gov/Traces/study/">SRA Run
-Selector tool</a>.</p>
-<p>When you have your list of run accessions,
-e.g. <code>SRR7777895</code>, then you will be ready to download your
-sequences using the SRA Toolkit</p>
+<div id="finding-datasets-of-interest" class="section level3" number="1.3.2">
+<h3 number="1.3.2"><span class="header-section-number">1.3.2</span> Finding dataset(s) of interest:</h3>
+<p>NCBI has some <a href="https://www.ncbi.nlm.nih.gov/sra/docs/srasearch/#basic-search-in-sra">useful help pages here</a></p>
+<p>If you already have e.g. your relevant project accession ID, and want to get associated run accession IDs, you may also find it useful to use the <a href="https://www.ncbi.nlm.nih.gov/Traces/study/">SRA Run Selector tool</a>.</p>
+<p>When you have your list of run accessions, e.g. <code>SRR7777895</code>, then you will be ready to download your sequences using the SRA Toolkit</p>
 </div>
-<div id="downloading-your-sequences-using-sra-toolkit"
-class="section level3" number="1.3.3">
-<h3><span class="header-section-number">1.3.3</span> Downloading your
-sequences using SRA Toolkit</h3>
-<p>Once again there are helpful documentation pages for this part of the
-SRA Toolkit, which you can find <a
-href="https://github.com/ncbi/sra-tools/wiki/08.-prefetch-and-fasterq-dump">here</a>.
-The SRA Toolkit documentation recommends using two steps to download
-fastq files: <code>prefetch</code> which downloads relevant data,
-followed by <code>fasterq-dump</code> which creates the fastq formatted
-files from the prefetched data.</p>
-<p>Note: <code>fasterq-dump</code> is an updated and streamlined version
-of an older software, <code>fastq-dump</code>. You may encounter older
-blog posts which reference <code>fastq-dump</code>, or you may hear from
-colleagues about using it. Either is fine to use, and both of them are
-part of SRA Toolkit, but it seems <code>fasterq-dump</code> is
-recommended going forward.</p>
-<p>Note: It is also possible to directly use <code>fastq-dump</code>
-without first using <code>prefetch</code>. However, it will be slow and
-prone to failure with any network issues.</p>
+<div id="downloading-your-sequences-using-sra-toolkit" class="section level3" number="1.3.3">
+<h3 number="1.3.3"><span class="header-section-number">1.3.3</span> Downloading your sequences using SRA Toolkit</h3>
+<p>Once again there are helpful documentation pages for this part of the SRA Toolkit, which you can find <a href="https://github.com/ncbi/sra-tools/wiki/08.-prefetch-and-fasterq-dump">here</a>. The SRA Toolkit documentation recommends using two steps to download fastq files: <code>prefetch</code> which downloads relevant data, followed by <code>fasterq-dump</code> which creates the fastq formatted files from the prefetched data.</p>
+<p>Note: <code>fasterq-dump</code> is an updated and streamlined version of an older software, <code>fastq-dump</code>. You may encounter older blog posts which reference <code>fastq-dump</code>, or you may hear from colleagues about using it. Either is fine to use, and both of them are part of SRA Toolkit, but it seems <code>fasterq-dump</code> is recommended going forward.</p>
+<p>Note: It is also possible to directly use <code>fastq-dump</code> without first using <code>prefetch</code>. However, it will be slow and prone to failure with any network issues.</p>
 </details>
-<p><br> <br> <br>
-<img src="images/building-blocks-checkmark.png" width="800" /> <br> <br>
-<br> <br> <br></p>
+<p><br> <br> <br> <img src="images/building-blocks-checkmark.png" width="800" /> <br> <br> <br> <br> <br></p>
 </div>
 </div>
 </div>
