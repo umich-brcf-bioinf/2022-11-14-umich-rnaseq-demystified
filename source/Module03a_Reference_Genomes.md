@@ -1,5 +1,5 @@
 ---
-title: "Day 1 - Module 03: Reference Genomes"
+title: "Module 03a: Reference Genomes"
 author: "UM Bioinformatics Core"
 output:
         html_document:

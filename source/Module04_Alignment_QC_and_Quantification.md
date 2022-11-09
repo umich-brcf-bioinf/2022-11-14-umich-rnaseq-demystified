@@ -1,5 +1,5 @@
 ---
-title: "Day 1 - Module 05: MultiQC and Counts"
+title: "Module 04: Alignment QC and Quantification"
 author: "UM Bioinformatics Core"
 output:
         html_document:
@@ -23,7 +23,7 @@ pre {
 }
 </style>
 
-# MultiQC, Count Matrix
+# Alignment QC, MultiQC, and Count Matrix
 
 In this module, we will learn:
 

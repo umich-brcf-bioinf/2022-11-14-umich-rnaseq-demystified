@@ -1,5 +1,5 @@
 ---
-title: "Day 1 - Module 02: More QC"
+title: "Module 02b: Trimming"
 author: "UM Bioinformatics Core"
 output:
         html_document:
@@ -23,7 +23,7 @@ pre {
 }
 </style>
 
-# More QC - Cutadapt
+# Trimming and More Sequence QC
 
 In this module we will learn:
 

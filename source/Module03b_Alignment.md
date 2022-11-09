@@ -1,5 +1,5 @@
 ---
-title: "Day 1 - Module 04: Alignment"
+title: "Module 03b: Alignment"
 author: "UM Bioinformatics Core"
 output:
         html_document:
