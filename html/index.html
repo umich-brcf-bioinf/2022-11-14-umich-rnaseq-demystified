@@ -13,7 +13,7 @@
 
 <title>index</title>
 
-<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -178,8 +178,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "\e259";
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -187,9 +187,16 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "\e258";
-  font-family: 'Glyphicons Halflings';
+  content: "&#xe258;";
   border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -368,12 +375,10 @@ body, td {
 <div id="rna-seq-demystified" class="section level1">
 <h1>RNA-seq Demystified</h1>
 <div id="setup-instructions" class="section level4">
-<h4><a href="workshop_setup/setup_instructions.html">Setup
-instructions</a></h4>
+<h4><a href="workshop_setup/setup_instructions.html">Setup instructions</a></h4>
 </div>
 <div id="slack-workspace" class="section level4">
-<h4><a href="https://umbioinfcoreworkshops.slack.com">Slack
-workspace</a></h4>
+<h4><a href="https://umbioinfcoreworkshops.slack.com">Slack workspace</a></h4>
 <hr />
 </div>
 <div id="schedule" class="section level2">
@@ -381,10 +386,6 @@ workspace</a></h4>
 <div id="day-1-chris-travis" class="section level4">
 <h4>Day 1 (Chris &amp; Travis)</h4>
 <table>
-<colgroup>
-<col width="44%" />
-<col width="55%" />
-</colgroup>
 <thead>
 <tr class="header">
 <th align="left">Time</th>
@@ -394,8 +395,7 @@ workspace</a></h4>
 <tbody>
 <tr class="odd">
 <td align="left">9:00</td>
-<td align="left"><a href="Module00_Introduction.html">Introductions and
-Startup</a></td>
+<td align="left"><a href="Module00_Introduction.html">Introductions and Startup</a></td>
 </tr>
 <tr class="even">
 <td align="left">9:30</td>
@@ -403,18 +403,15 @@ Startup</a></td>
 </tr>
 <tr class="odd">
 <td align="left"></td>
-<td align="left">    <a href="Module01_Warming_Up.html">Warming
-Up</a></td>
+<td align="left">    <a href="Module01_Warming_Up.html">Warming Up</a></td>
 </tr>
 <tr class="even">
 <td align="left"></td>
-<td align="left">    <a href="Module02a_Sequence_QC.html">Quality
-Control (FASTQs)</a></td>
+<td align="left">    <a href="Module02a_Sequence_QC.html">Quality Control (FASTQs)</a></td>
 </tr>
 <tr class="odd">
 <td align="left"></td>
-<td align="left">    <a href="Module02b_Trimming.html">Trimming and
-MultiQC</a></td>
+<td align="left">    <a href="Module02b_Trimming.html">Trimming and MultiQC</a></td>
 </tr>
 <tr class="even">
 <td align="left">11:00</td>
@@ -426,13 +423,11 @@ MultiQC</a></td>
 </tr>
 <tr class="even">
 <td align="left"></td>
-<td align="left">    <a
-href="Module03a_Reference_Genomes.html">Reference genomes</a></td>
+<td align="left">    <a href="Module03a_Reference_Genomes.html">Reference genomes</a></td>
 </tr>
 <tr class="odd">
 <td align="left"></td>
-<td align="left">    <a
-href="Module03b_Alignment.html">Alignment</a></td>
+<td align="left">    <a href="Module03b_Alignment.html">Alignment</a></td>
 </tr>
 <tr class="even">
 <td align="left"></td>
@@ -440,15 +435,11 @@ href="Module03b_Alignment.html">Alignment</a></td>
 </tr>
 <tr class="odd">
 <td align="left"></td>
-<td align="left">    <a
-href="Module04_Alignment_QC_and_Quantification.html">Count matrix /
-Alignment QC</a></td>
+<td align="left">    <a href="Module04_Alignment_QC_and_Quantification.html">Count matrix / Alignment QC</a></td>
 </tr>
 <tr class="even">
 <td align="left"></td>
-<td align="left">    <a
-href="Module05_Additional_Details.html">Additional details and
-exercise</a></td>
+<td align="left">    <a href="Module05_Additional_Details.html">Additional details and exercise</a></td>
 </tr>
 <tr class="odd">
 <td align="left">1:00</td>
@@ -460,10 +451,6 @@ exercise</a></td>
 <div id="day-2-chris-raymond" class="section level4">
 <h4>Day 2 (Chris &amp; Raymond)</h4>
 <table>
-<colgroup>
-<col width="44%" />
-<col width="55%" />
-</colgroup>
 <tbody>
 <tr class="odd">
 <td align="left">9:00</td>
@@ -475,18 +462,15 @@ exercise</a></td>
 </tr>
 <tr class="odd">
 <td align="left"></td>
-<td align="left">    <a href="Module06_DEAnalysisSetup.html">DE
-Introduction</a></td>
+<td align="left">    <a href="Module06_DEAnalysisSetup.html">DE Introduction</a></td>
 </tr>
 <tr class="even">
 <td align="left"></td>
-<td align="left">    <a href="Module07_DESeq2Init.html">DE
-Initialization</a></td>
+<td align="left">    <a href="Module07_DESeq2Init.html">DE Initialization</a></td>
 </tr>
 <tr class="odd">
 <td align="left"></td>
-<td align="left">    <a href="Module08_DESeq2DE.html">DE Normalization
-and Modeling</a></td>
+<td align="left">    <a href="Module08_DESeq2DE.html">DE Normalization and Modeling</a></td>
 </tr>
 <tr class="even">
 <td align="left">11:00</td>
@@ -498,8 +482,7 @@ and Modeling</a></td>
 </tr>
 <tr class="even">
 <td align="left"></td>
-<td align="left">    <a href="Module09_SampleQCViz.html">Sample
-QC</a></td>
+<td align="left">    <a href="Module09_SampleQCViz.html">Sample QC</a></td>
 </tr>
 <tr class="odd">
 <td align="left">1:00</td>
@@ -511,10 +494,6 @@ QC</a></td>
 <div id="day-3-raymond" class="section level4">
 <h4>Day 3 (Raymond)</h4>
 <table>
-<colgroup>
-<col width="44%" />
-<col width="55%" />
-</colgroup>
 <tbody>
 <tr class="odd">
 <td align="left">9:00</td>
@@ -526,13 +505,11 @@ QC</a></td>
 </tr>
 <tr class="odd">
 <td align="left"></td>
-<td align="left">    <a href="Module10_DEComparisons.html">DE
-Testing</a></td>
+<td align="left">    <a href="Module10_DEComparisons.html">DE Testing</a></td>
 </tr>
 <tr class="even">
 <td align="left"></td>
-<td align="left">    <a href="Module11_DEVisualizations.html">DE
-Visualization and Annotation</a></td>
+<td align="left">    <a href="Module11_DEVisualizations.html">DE Visualization and Annotation</a></td>
 </tr>
 <tr class="odd">
 <td align="left">11:00</td>
@@ -540,13 +517,11 @@ Visualization and Annotation</a></td>
 </tr>
 <tr class="even">
 <td align="left">11:15</td>
-<td align="left">    <a href="Module11_DEVisualizations.html">DE
-Visualization and Annotation (continued)</a></td>
+<td align="left">    <a href="Module11_DEVisualizations.html">DE Visualization and Annotation (continued)</a></td>
 </tr>
 <tr class="odd">
 <td align="left"></td>
-<td align="left">    <a href="Module11X_BonusContent.html">Bonus
-Content</a></td>
+<td align="left">    <a href="Module11X_BonusContent.html">Bonus Content</a></td>
 </tr>
 <tr class="even">
 <td align="left">12:45</td>
