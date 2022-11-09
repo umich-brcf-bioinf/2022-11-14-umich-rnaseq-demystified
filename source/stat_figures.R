@@ -1,0 +1,32 @@
+library(tidyverse)
+
+setwd('~/Projects/2022-11-14-umich-rnaseq-demystified')
+
+expr = data.frame(X1 = rnorm(n = 6, mean = 4, sd = 0.5),
+                  X2 = rnorm(n = 6, mean = 4, sd = 0.5),
+                  X3 = rnorm(n = 6, mean = 4.5, sd = 1.5),
+                  X4 = rnorm(n = 6, mean = 4, sd = 1.5),
+                  X5 = rnorm(n = 6, mean = 4, sd = 0.5),
+                  X6 = rnorm(n = 6, mean = 1, sd = 0.5))
+
+expr_mat = t(expr)
+colnames(expr_mat) = paste('Sample', 1:6, sep = '_')
+
+df = data.frame(
+    Condition = factor(c('WT','KO','WT','KO','WT','KO'), levels = c('WT', 'KO')),
+    Gene = c('Gene_1', 'Gene_1', 'Gene_2', 'Gene_2', 'Gene_3', 'Gene_3')
+)
+
+df = bind_cols(df, expr_mat)
+
+long_df = pivot_longer(df, -c(Condition, Gene), names_to = 'Sample', values_to = 'Expression')
+
+plot = ggplot(long_df, aes(x = Condition, y = Expression, color = Condition)) + 
+    geom_boxplot() + geom_jitter(size = 3) + facet_grid(. ~ Gene) +
+    ggtitle('Does the KO affect the expression of Gene_')
+plot
+ggsave(filename = 'source/images/Module10_stat_plot.png', height = 4, width = 6, units = 'in', dpi = 300)
+
+plot = ggplot(long_df %>% filter(Gene == 'Gene_3'), aes(x = Condition, y = Expression, color = Condition)) +
+    geom_boxplot() + geom_jitter(size = 3)
+plot

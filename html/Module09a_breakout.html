@@ -11,7 +11,7 @@
 
 <meta name="author" content="UM Bioinformatics Core" />
 
-<meta name="date" content="2022-08-09" />
+<meta name="date" content="2022-10-26" />
 
 <title>Breakout Exercise 1 - Expression Heatmap</title>
 
@@ -353,10 +353,10 @@ div.tocify {
       <a href="Module01_Warming_Up.html">Warming up</a>
     </li>
     <li>
-      <a href="Module02a_QC.html">Quality Control</a>
+      <a href="Module02a_Sequence_QC.html">Sequence QC</a>
     </li>
     <li>
-      <a href="Module02b_Cutadapt_MoreQC.html">Cutadapt/MoreQC</a>
+      <a href="Module02b_Trimming.html">Trimming</a>
     </li>
   </ul>
 </li>
@@ -368,10 +368,10 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Module03_Reference_Genomes.html">Reference Genomes</a>
+      <a href="Module03a_Reference_Genomes.html">Reference Genomes</a>
     </li>
     <li>
-      <a href="Module04_Alignment.html">Alignment/Quantification (STAR/RSEM)</a>
+      <a href="Module03b_Alignment.html">Alignment</a>
     </li>
   </ul>
 </li>
@@ -383,10 +383,10 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Module05a_MultiQC_and_Count_Matrix.html">Count matrix / Alignment QC</a>
+      <a href="Module04_Alignment_QC_and_Quantification.html">Alignment QC and Quantification</a>
     </li>
     <li>
-      <a href="Module05b_Additional_Details.html">Optional: Additional details</a>
+      <a href="Module05_Additional_Details.html">Optional: Additional details</a>
     </li>
   </ul>
 </li>
@@ -400,13 +400,13 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Module06_DEAnalysisSetup.html">Introduction to DESeq2</a>
+      <a href="Module06_DEAnalysisSetup.html">DE Introduction</a>
     </li>
     <li>
-      <a href="Module07_DESeq2Init.html">DESeq2 Initialization</a>
+      <a href="Module07_DESeq2Init.html">DE Initialization</a>
     </li>
     <li>
-      <a href="Module08_DESeq2DE.html">Count Normalizations and DESeq2 model fitting</a>
+      <a href="Module08_DESeq2DE.html">DE Normalization and Modeling</a>
     </li>
   </ul>
 </li>
@@ -418,7 +418,7 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Module09_SampleQCViz.html">Sample Visualizations for QC</a>
+      <a href="Module09_SampleQCViz.html">Sample QC</a>
     </li>
   </ul>
 </li>
@@ -430,10 +430,10 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Module10_DEComparisons.html">Comparisons</a>
+      <a href="Module10_DEComparisons.html">DE Testing</a>
     </li>
     <li>
-      <a href="Module11_DEVisualizations.html">DE Visiualization and Annotation</a>
+      <a href="Module11_DEVisualizations.html">DE Visualization and Annotation</a>
     </li>
     <li>
       <a href="Module11X_BonusContent.html">Bonus content</a>
@@ -462,7 +462,7 @@ div.tocify {
 <h1 class="title toc-ignore">Breakout Exercise 1 - Expression
 Heatmap</h1>
 <h4 class="author">UM Bioinformatics Core</h4>
-<h4 class="date">2022-08-09</h4>
+<h4 class="date">2022-10-26</h4>
 
 </div>
 
@@ -525,6 +525,7 @@ rownames(test) = paste(&quot;Gene&quot;, 1:20, sep = &quot;&quot;)
 
 # Draw the heatmap
 pheatmap(test)</code></pre>
+<p><img src="fig/09a-test_heatmap-1.png" width="816" style="display: block; margin: auto;" /></p>
 </div>
 <div id="steps" class="section level1">
 <h1>Steps</h1>
@@ -554,13 +555,20 @@ Answer
 </summary>
 <pre class="r"><code>exp_mat = assay(rld)
 head(exp_mat)</code></pre>
-<pre><code>                   SRR7777895 SRR7777896 SRR7777897 SRR7777898 SRR7777899 SRR7777900
-ENSMUSG00000000001  10.514813  10.366709  10.419463  10.840373  10.410449  10.578771
-ENSMUSG00000000028  10.604461  10.734506  10.735026  10.682714  10.820938  10.990999
-ENSMUSG00000000031  11.160276  10.498747  10.742763  11.861617  10.578156  10.298022
-ENSMUSG00000000037   4.642433   4.555500   4.578934   4.656950   4.719012   4.620204
-ENSMUSG00000000049   3.017478   2.820198   2.843894   2.936455   2.814833   2.811619
-ENSMUSG00000000056  14.321672  14.284652  14.337197  13.904238  14.393912  14.235971</code></pre>
+<pre><code>                   SRR7777895 SRR7777896 SRR7777897 SRR7777898 SRR7777899
+ENSMUSG00000000001  10.514813  10.366709  10.419463  10.840373  10.410449
+ENSMUSG00000000028  10.604461  10.734506  10.735026  10.682714  10.820938
+ENSMUSG00000000031  11.160276  10.498747  10.742763  11.861617  10.578156
+ENSMUSG00000000037   4.642433   4.555500   4.578934   4.656950   4.719012
+ENSMUSG00000000049   3.017478   2.820198   2.843894   2.936455   2.814833
+ENSMUSG00000000056  14.321672  14.284652  14.337197  13.904238  14.393912
+                   SRR7777900
+ENSMUSG00000000001  10.578771
+ENSMUSG00000000028  10.990999
+ENSMUSG00000000031  10.298022
+ENSMUSG00000000037   4.620204
+ENSMUSG00000000049   2.811619
+ENSMUSG00000000056  14.235971</code></pre>
 </details>
 <p><br></p>
 <ol start="3" style="list-style-type: decimal">
@@ -622,6 +630,7 @@ dim(top_var_exp_mat)</code></pre>
 Answer
 </summary>
 <pre class="r"><code>pheatmap(top_var_exp_mat)</code></pre>
+<img src="fig/09a-create_heatmap-1.png" width="816" style="display: block; margin: auto;" />
 </details>
 <p><br></p>
 </div>

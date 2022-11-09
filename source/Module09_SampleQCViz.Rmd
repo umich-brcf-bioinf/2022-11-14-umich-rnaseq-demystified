@@ -1,5 +1,5 @@
 ---
-title: "Module 09: QC Visualizations"
+title: "Module 09: Sample QC"
 author: "UM Bioinformatics Core"
 date: "`r Sys.Date()`"
 output:
@@ -57,7 +57,7 @@ library(RColorBrewer)
 
 Prior to testing for differential expression between our comparisons of interest, we'll first generate plots that will assess how well our samples match up with our expectations (based on their treatment groups) and what we might expect to see from our differential expression comparisons.
 
-![](./images/wayfinder/wayfinder-09.png){width=75%}
+![](./images/wayfinder/wayfinder-SampleQCViz.png){width=75%}
 
 ---
 

@@ -37,7 +37,7 @@ In this module, we will learn:
 
 Here we will take the results from the previous module and operate on them a bit further. This will wrap up the preceding exercises, leaving us well-poised to begin differential expression, which we will discuss today and tomorrow.
 
-![](images/wayfinder/wayfinder-05.png)
+![](images/wayfinder/wayfinder-Alignment_QC_and_Quantification.png)
 <br>
 <br>
 <br>

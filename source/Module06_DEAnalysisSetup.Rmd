@@ -1,5 +1,5 @@
 ---
-title: "Module 06: Introduction"
+title: "Module 06: DE Introduction"
 author: "UM Bioinformatics Core"
 date: "`r Sys.Date()`"
 output:
@@ -43,7 +43,7 @@ knitr_fig_path("06-")
 
 Today we will proceed through key steps in a differential expression analysis, starting from a count table that's similar to what you generated in the first half of the workshop and similar to one of the outputs included in the [data that the Advanced Genomics Core delivers](https://brcf.medicine.umich.edu/cores/advanced-genomics/data-delivery/) for RNA-seq libraries.
 
-<img src="images/wayfinder/wayfinder-07.png" alt="wayfinder" style="width: 1000px;"/>
+<img src="images/wayfinder/wayfinder-DEAnalysisSetup.png" alt="wayfinder" style="width: 1000px;"/>
 
 > ## Warm-up {.unlisted .unnumbered}
 >

@@ -28,48 +28,36 @@ pre {
 }
 </style>
 
-# Welcome
+# Workshop goals and topics
 
-## About the Bioinformatics Core
+ - By the end of the workshop, attendees will be able to
+   - Transform raw sequencing data into annotated differential expression values using a suite of
+     open-source tools.
+   - Identify common data quality problems and understand their impact and possible mitigations
+   - Visualize differential expression data in RStudio plots.
 
-- The University of Michigan Bioinformatics Core is a team of analysts that help
-  researchers **design, analyze, and interpret** high-throughput genomics experiments.
-- Last year we helped about 60 researchers design and execute about 100 projects
-  including gene expression, epigenetic, variant identification, functional
-  enrichment and many other kinds of analyses.
-- We provide letters of support for grant proposals.
-- We are creating a series of bioinformatics-focused workshops.
-- https://brcf.medicine.umich.edu/bioinformatics
+ - This workshop is targeted toward researchers who would like to be able to run
+   RNA-Seq analysis on their own. It assumes a very basic familiarity with
+   genetics, the command line, and R or R-Studio.
+
+ - The first day will be a mix of hands-on content and lecture-style components,
+   while the second day will primarily be a hands-on experience.
+
+ - Please let us know if there is anything we can do to improve the workshop experience.
+
+ - Our purpose is not to be exhaustive, there is a lot that we cannot cover in
+   the allotted time, and we don't expect anyone to be an expert at the end of
+   the workshop. But we hope you will have a familiarity with key concepts, data types,
+   tools, and how they all connect to one another in the service of a biological question.
 
 
 ## About the workshop team
 | ![](images/Module00_headshots/headshot_cgates.jpg) | ![](images/Module00_headshots/headshot_mbradenb.jpg) | ![](images/Module00_headshots/headshot_rcavalca.jpg) | ![](images/Module00_headshots/headshot_trsaari.jpg) |
 |:-:|:-:|:-:|:-:|
 | **Chris** | **Marci** | **Raymond** | **Travis** |
-| | | | |
-| ![](images/Module00_headshots/headshot_mccwen.jpg) | ![](images/Module00_headshots/headshot_damki.jpg) | ![](images/Module00_headshots/headshot_mkdohert.jpg) | ![](images/Module00_headshots/headshot_jrhemama.jpg) |
-|  **Crystal** | **Dana** | **Matt**| **Rhema** |
 | | | |
-| ![](images/Module00_headshots/headshot_dengkw.jpg) | ![](images/Module00_headshots/headshot_weishwu.jpg) |
-|  **Kaiwen** | **Weisheng** |
-<br/>
-
-## Workshop sponsors
-![Sponsors](images/Module00_sponsor_logos.png)
-
-- [University of Michigan Library](https://www.lib.umich.edu/)
-
-  Our mission is to support, enhance, and collaborate in the instructional, research, and
-  service activities of faculty, students, and staff, and contribute to the common good by
-  collecting, organizing, preserving, communicating, sharing, and creating the record of human
-  knowledge.
-
-- [Biomedical Research Core Facilities](https://brcf.medicine.umich.edu/)
-
-  Biomedical Research Core Facilities (BRCF) helps researchers economically take advantage of
-  the latest technology and collaborate with top experts in the field. Established in 1986, the
-  BRCF was formed to offer centralized access to research services and equipment.
-<br/>
+| ![](images/Module00_headshots/headshot_damki.jpg) | ![](images/Module00_headshots/headshot_grkenney.jpg) | ![](images/Module00_headshots/headshot_diaorch.jpg) |
+|  **Dana** |**Grace** | **Rucheng** |
 <br/>
 
 # Code of Conduct
@@ -199,27 +187,6 @@ It is important that you can see:
 <br/>
 
 
-# Workshop goals and topics
-
- - By the end of the workshop, attendees will be able to
-   - Transform raw sequencing data into annotated differential expression values using a suite of
-     open-source tools.
-   - Identify common data quality problems and understand their impact and possible mitigations
-   - Visualize differential expression data in RStudio plots.
-
- - This workshop is targeted toward researchers who would like to be able to run
-   RNA-Seq analysis on their own. It assumes a very basic familiarity with
-   genetics, the command line, and R or R-Studio.
-
- - The first day will be a mix of hands-on content and lecture-style components,
-   while the second day will primarily be a hands-on experience.
-
- - Please let us know if there is anything we can do to improve the workshop experience.
-
- - Our purpose is not to be exhaustive, there is a lot that we cannot cover in
-   the allotted time, and we don't expect anyone to be an expert at the end of
-   the workshop. But we hope you will have a familiarity with key concepts, data types,
-   tools, and how they all connect to one another in the service of a biological question.
 
 ## RNA-Seq Demystified: starting with the end in mind
 ![](images/Module00_top_down.jpg)
@@ -227,7 +194,7 @@ It is important that you can see:
 <br/>
 
 ### Workshop topics at a glance
-![](images/wayfinder/wayfinder-01.png)
+![](images/wayfinder/wayfinder-Introduction.png)
 
 # Any questions?
  -
@@ -235,6 +202,38 @@ It is important that you can see:
 
 
 ---
+
+# Thank you to our sponsors/contributors
+
+![](images/Module00_sponsor_logos.png)
+
+## [UM BRCF Bioinformatics Core](https://brcf.medicine.umich.edu/bioinformatics){target="_blank"}
+
+- The University of Michigan BRCF Bioinformatics Core is a team of analysts that help
+  researchers **design, analyze, and interpret** high-throughput genomics experiments.
+- Last year we helped about 60 researchers design and execute about 100 projects
+  including gene expression, epigenetic, variant identification, functional
+  enrichment and many other kinds of analyses.
+- We provide letters of support for grant proposals.
+- We are creating a series of bioinformatics-focused workshops.
+
+## [University of Michigan Library](https://www.lib.umich.edu/){target="_blank"}
+
+  Our mission is to support, enhance, and collaborate in the instructional, research, and
+  service activities of faculty, students, and staff, and contribute to the common good by
+  collecting, organizing, preserving, communicating, sharing, and creating the record of human
+  knowledge.
+
+## [Biomedical Research Core Facilities](https://brcf.medicine.umich.edu/){target="_blank"}
+
+  Biomedical Research Core Facilities (BRCF) helps researchers economically take advantage of
+  the latest technology and collaborate with top experts in the field. Established in 1986, the
+  BRCF was formed to offer centralized access to research services and equipment.
+<br/>
+<br/>
+
+
+## Acknowledgements
 
 * This workshop content is licensed under a [Creative Commons Attribution 4 License](https://creativecommons.org/licenses/by/4.0/).
 

@@ -36,22 +36,22 @@ body, td {
 | :---  | :---- |
 |  9:00 | Review |
 |  9:20 | **Groups and Modeling:** |
-|       | &nbsp;&nbsp;&nbsp;&nbsp;[Intro to DESeq2](Module06_DEAnalysisSetup.html) |
-|       | &nbsp;&nbsp;&nbsp;&nbsp;[DESeq2 Initialization](Module07_DESeq2Init.html) |
-|       | &nbsp;&nbsp;&nbsp;&nbsp;[Count normalization and model fitting](Module08_DESeq2DE.html) |
+|       | &nbsp;&nbsp;&nbsp;&nbsp;[DE Introduction](Module06_DEAnalysisSetup.html) |
+|       | &nbsp;&nbsp;&nbsp;&nbsp;[DE Initialization](Module07_DESeq2Init.html) |
+|       | &nbsp;&nbsp;&nbsp;&nbsp;[DE Normalization and Modeling](Module08_DESeq2DE.html) |
 | 11:00 | Break |
 | 11:15 | **Expression plots:** |
-|       | &nbsp;&nbsp;&nbsp;&nbsp;[Sample visualizations for QC](Module09_SampleQCViz.html)
+|       | &nbsp;&nbsp;&nbsp;&nbsp;[Sample QC](Module09_SampleQCViz.html)
 |  1:00 | Day 2 concludes |
 #### Day 3 (Raymond)
 | | |
 | :---  | :---- |
 |  9:00 | Review |
 |  9:10 | **Differential Expression:** |
-|       | &nbsp;&nbsp;&nbsp;&nbsp;[Comparisons](Module10_DEComparisons.html) |
-|       | &nbsp;&nbsp;&nbsp;&nbsp;[DE Visiualization and Annotation](Module11_DEVisualizations.html)|
+|       | &nbsp;&nbsp;&nbsp;&nbsp;[DE Testing](Module10_DEComparisons.html) |
+|       | &nbsp;&nbsp;&nbsp;&nbsp;[DE Visualization and Annotation](Module11_DEVisualizations.html)|
 | 11:00 | Break |
-| 11:15 | &nbsp;&nbsp;&nbsp;&nbsp;[DE Visiualization and Annotation (continued)](Module11_DEVisualizations.html)|
+| 11:15 | &nbsp;&nbsp;&nbsp;&nbsp;[DE Visualization and Annotation (continued)](Module11_DEVisualizations.html)|
 |       | &nbsp;&nbsp;&nbsp;&nbsp;[Bonus Content](Module11X_BonusContent.html)|
 | 12:45 | [Wrap-up](Module99_Wrap_up.html)
 |  1:00 | Day 3 concludes |

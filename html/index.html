@@ -13,7 +13,7 @@
 
 <title>index</title>
 
-<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -141,11 +141,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -174,8 +178,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -183,16 +187,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -259,10 +256,10 @@ $(document).ready(function () {
       <a href="Module01_Warming_Up.html">Warming up</a>
     </li>
     <li>
-      <a href="Module02a_QC.html">Quality Control</a>
+      <a href="Module02a_Sequence_QC.html">Sequence QC</a>
     </li>
     <li>
-      <a href="Module02b_Cutadapt_MoreQC.html">Cutadapt/MoreQC</a>
+      <a href="Module02b_Trimming.html">Trimming</a>
     </li>
   </ul>
 </li>
@@ -274,10 +271,10 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Module03_Reference_Genomes.html">Reference Genomes</a>
+      <a href="Module03a_Reference_Genomes.html">Reference Genomes</a>
     </li>
     <li>
-      <a href="Module04_Alignment.html">Alignment/Quantification (STAR/RSEM)</a>
+      <a href="Module03b_Alignment.html">Alignment</a>
     </li>
   </ul>
 </li>
@@ -289,10 +286,10 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Module05a_MultiQC_and_Count_Matrix.html">Count matrix / Alignment QC</a>
+      <a href="Module04_Alignment_QC_and_Quantification.html">Alignment QC and Quantification</a>
     </li>
     <li>
-      <a href="Module05b_Additional_Details.html">Optional: Additional details</a>
+      <a href="Module05_Additional_Details.html">Optional: Additional details</a>
     </li>
   </ul>
 </li>
@@ -306,13 +303,13 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Module06_DEAnalysisSetup.html">Introduction to DESeq2</a>
+      <a href="Module06_DEAnalysisSetup.html">DE Introduction</a>
     </li>
     <li>
-      <a href="Module07_DESeq2Init.html">DESeq2 Initialization</a>
+      <a href="Module07_DESeq2Init.html">DE Initialization</a>
     </li>
     <li>
-      <a href="Module08_DESeq2DE.html">Count Normalizations and DESeq2 model fitting</a>
+      <a href="Module08_DESeq2DE.html">DE Normalization and Modeling</a>
     </li>
   </ul>
 </li>
@@ -324,7 +321,7 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Module09_SampleQCViz.html">Sample Visualizations for QC</a>
+      <a href="Module09_SampleQCViz.html">Sample QC</a>
     </li>
   </ul>
 </li>
@@ -336,10 +333,10 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Module10_DEComparisons.html">Comparisons</a>
+      <a href="Module10_DEComparisons.html">DE Testing</a>
     </li>
     <li>
-      <a href="Module11_DEVisualizations.html">DE Visiualization and Annotation</a>
+      <a href="Module11_DEVisualizations.html">DE Visualization and Annotation</a>
     </li>
     <li>
       <a href="Module11X_BonusContent.html">Bonus content</a>
@@ -411,13 +408,13 @@ Up</a></td>
 </tr>
 <tr class="even">
 <td align="left"></td>
-<td align="left">    <a href="Module02a_QC.html">Quality Control
-(FASTQs)</a></td>
+<td align="left">    <a href="Module02a_Sequence_QC.html">Quality
+Control (FASTQs)</a></td>
 </tr>
 <tr class="odd">
 <td align="left"></td>
-<td align="left">    <a href="Module02b_Cutadapt_MoreQC.html">Trimming
-and MultiQC</a></td>
+<td align="left">    <a href="Module02b_Trimming.html">Trimming and
+MultiQC</a></td>
 </tr>
 <tr class="even">
 <td align="left">11:00</td>
@@ -429,13 +426,13 @@ and MultiQC</a></td>
 </tr>
 <tr class="even">
 <td align="left"></td>
-<td align="left">    <a href="Module03_Reference_Genomes.html">Reference
-genomes</a></td>
+<td align="left">    <a
+href="Module03a_Reference_Genomes.html">Reference genomes</a></td>
 </tr>
 <tr class="odd">
 <td align="left"></td>
 <td align="left">    <a
-href="Module04_Alignment.html">Alignment</a></td>
+href="Module03b_Alignment.html">Alignment</a></td>
 </tr>
 <tr class="even">
 <td align="left"></td>
@@ -444,13 +441,13 @@ href="Module04_Alignment.html">Alignment</a></td>
 <tr class="odd">
 <td align="left"></td>
 <td align="left">    <a
-href="Module05a_MultiQC_and_Count_Matrix.html">Count matrix / Alignment
-QC</a></td>
+href="Module04_Alignment_QC_and_Quantification.html">Count matrix /
+Alignment QC</a></td>
 </tr>
 <tr class="even">
 <td align="left"></td>
 <td align="left">    <a
-href="Module05b_Additional_Details.html">Additional details and
+href="Module05_Additional_Details.html">Additional details and
 exercise</a></td>
 </tr>
 <tr class="odd">
@@ -478,18 +475,18 @@ exercise</a></td>
 </tr>
 <tr class="odd">
 <td align="left"></td>
-<td align="left">    <a href="Module06_DEAnalysisSetup.html">Intro to
-DESeq2</a></td>
+<td align="left">    <a href="Module06_DEAnalysisSetup.html">DE
+Introduction</a></td>
 </tr>
 <tr class="even">
 <td align="left"></td>
-<td align="left">    <a href="Module07_DESeq2Init.html">DESeq2
+<td align="left">    <a href="Module07_DESeq2Init.html">DE
 Initialization</a></td>
 </tr>
 <tr class="odd">
 <td align="left"></td>
-<td align="left">    <a href="Module08_DESeq2DE.html">Count
-normalization and model fitting</a></td>
+<td align="left">    <a href="Module08_DESeq2DE.html">DE Normalization
+and Modeling</a></td>
 </tr>
 <tr class="even">
 <td align="left">11:00</td>
@@ -502,7 +499,7 @@ normalization and model fitting</a></td>
 <tr class="even">
 <td align="left"></td>
 <td align="left">    <a href="Module09_SampleQCViz.html">Sample
-visualizations for QC</a></td>
+QC</a></td>
 </tr>
 <tr class="odd">
 <td align="left">1:00</td>
@@ -529,13 +526,13 @@ visualizations for QC</a></td>
 </tr>
 <tr class="odd">
 <td align="left"></td>
-<td align="left">    <a
-href="Module10_DEComparisons.html">Comparisons</a></td>
+<td align="left">    <a href="Module10_DEComparisons.html">DE
+Testing</a></td>
 </tr>
 <tr class="even">
 <td align="left"></td>
 <td align="left">    <a href="Module11_DEVisualizations.html">DE
-Visiualization and Annotation</a></td>
+Visualization and Annotation</a></td>
 </tr>
 <tr class="odd">
 <td align="left">11:00</td>
@@ -544,7 +541,7 @@ Visiualization and Annotation</a></td>
 <tr class="even">
 <td align="left">11:15</td>
 <td align="left">    <a href="Module11_DEVisualizations.html">DE
-Visiualization and Annotation (continued)</a></td>
+Visualization and Annotation (continued)</a></td>
 </tr>
 <tr class="odd">
 <td align="left"></td>

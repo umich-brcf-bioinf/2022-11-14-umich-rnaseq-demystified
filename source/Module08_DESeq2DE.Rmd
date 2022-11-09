@@ -1,5 +1,5 @@
 ---
-title: "Module 08: Normalization and Model Fitting"
+title: "Module 08: DE Normalization and Modeling"
 author: "UM Bioinformatics Core"
 date: "`r Sys.Date()`"
 output:
@@ -46,7 +46,7 @@ library(DESeq2)
 
 Here we will proceed with count normalizations and fit our DESeq2 model.
 
-![](./images/wayfinder/wayfinder-08.png){width=75%}
+![](./images/wayfinder/wayfinder-DESeq2DE.png){width=75%}
 
 ---
 

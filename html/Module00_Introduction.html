@@ -342,10 +342,10 @@ div.tocify {
       <a href="Module01_Warming_Up.html">Warming up</a>
     </li>
     <li>
-      <a href="Module02a_QC.html">Quality Control</a>
+      <a href="Module02a_Sequence_QC.html">Sequence QC</a>
     </li>
     <li>
-      <a href="Module02b_Cutadapt_MoreQC.html">Cutadapt/MoreQC</a>
+      <a href="Module02b_Trimming.html">Trimming</a>
     </li>
   </ul>
 </li>
@@ -357,10 +357,10 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Module03_Reference_Genomes.html">Reference Genomes</a>
+      <a href="Module03a_Reference_Genomes.html">Reference Genomes</a>
     </li>
     <li>
-      <a href="Module04_Alignment.html">Alignment/Quantification (STAR/RSEM)</a>
+      <a href="Module03b_Alignment.html">Alignment</a>
     </li>
   </ul>
 </li>
@@ -372,10 +372,10 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Module05a_MultiQC_and_Count_Matrix.html">Count matrix / Alignment QC</a>
+      <a href="Module04_Alignment_QC_and_Quantification.html">Alignment QC and Quantification</a>
     </li>
     <li>
-      <a href="Module05b_Additional_Details.html">Optional: Additional details</a>
+      <a href="Module05_Additional_Details.html">Optional: Additional details</a>
     </li>
   </ul>
 </li>
@@ -389,13 +389,13 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Module06_DEAnalysisSetup.html">Introduction to DESeq2</a>
+      <a href="Module06_DEAnalysisSetup.html">DE Introduction</a>
     </li>
     <li>
-      <a href="Module07_DESeq2Init.html">DESeq2 Initialization</a>
+      <a href="Module07_DESeq2Init.html">DE Initialization</a>
     </li>
     <li>
-      <a href="Module08_DESeq2DE.html">Count Normalizations and DESeq2 model fitting</a>
+      <a href="Module08_DESeq2DE.html">DE Normalization and Modeling</a>
     </li>
   </ul>
 </li>
@@ -407,7 +407,7 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Module09_SampleQCViz.html">Sample Visualizations for QC</a>
+      <a href="Module09_SampleQCViz.html">Sample QC</a>
     </li>
   </ul>
 </li>
@@ -419,10 +419,10 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Module10_DEComparisons.html">Comparisons</a>
+      <a href="Module10_DEComparisons.html">DE Testing</a>
     </li>
     <li>
-      <a href="Module11_DEVisualizations.html">DE Visiualization and Annotation</a>
+      <a href="Module11_DEVisualizations.html">DE Visualization and Annotation</a>
     </li>
     <li>
       <a href="Module11X_BonusContent.html">Bonus content</a>
@@ -459,24 +459,31 @@ pre {
   font-size: 12px
 }
 </style>
-<div id="welcome" class="section level1">
-<h1>Welcome</h1>
-<div id="about-the-bioinformatics-core" class="section level2">
-<h2>About the Bioinformatics Core</h2>
+<div id="workshop-goals-and-topics" class="section level1">
+<h1>Workshop goals and topics</h1>
 <ul>
-<li>The University of Michigan Bioinformatics Core is a team of analysts
-that help researchers <strong>design, analyze, and interpret</strong>
-high-throughput genomics experiments.</li>
-<li>Last year we helped about 60 researchers design and execute about
-100 projects including gene expression, epigenetic, variant
-identification, functional enrichment and many other kinds of
-analyses.</li>
-<li>We provide letters of support for grant proposals.</li>
-<li>We are creating a series of bioinformatics-focused workshops.</li>
-<li><a href="https://brcf.medicine.umich.edu/bioinformatics"
-class="uri">https://brcf.medicine.umich.edu/bioinformatics</a></li>
+<li><p>By the end of the workshop, attendees will be able to</p>
+<ul>
+<li>Transform raw sequencing data into annotated differential expression
+values using a suite of open-source tools.</li>
+<li>Identify common data quality problems and understand their impact
+and possible mitigations</li>
+<li>Visualize differential expression data in RStudio plots.</li>
+</ul></li>
+<li><p>This workshop is targeted toward researchers who would like to be
+able to run RNA-Seq analysis on their own. It assumes a very basic
+familiarity with genetics, the command line, and R or R-Studio.</p></li>
+<li><p>The first day will be a mix of hands-on content and lecture-style
+components, while the second day will primarily be a hands-on
+experience.</p></li>
+<li><p>Please let us know if there is anything we can do to improve the
+workshop experience.</p></li>
+<li><p>Our purpose is not to be exhaustive, there is a lot that we
+cannot cover in the allotted time, and we don’t expect anyone to be an
+expert at the end of the workshop. But we hope you will have a
+familiarity with key concepts, data types, tools, and how they all
+connect to one another in the service of a biological question.</p></li>
 </ul>
-</div>
 <div id="about-the-workshop-team" class="section level2">
 <h2>About the workshop team</h2>
 <table>
@@ -513,66 +520,22 @@ src="images/Module00_headshots/headshot_trsaari.jpg" /></th>
 </tr>
 <tr class="odd">
 <td align="center"><img
-src="images/Module00_headshots/headshot_mccwen.jpg" /></td>
-<td align="center"><img
 src="images/Module00_headshots/headshot_damki.jpg" /></td>
 <td align="center"><img
-src="images/Module00_headshots/headshot_mkdohert.jpg" /></td>
+src="images/Module00_headshots/headshot_grkenney.jpg" /></td>
 <td align="center"><img
-src="images/Module00_headshots/headshot_jrhemama.jpg" /></td>
+src="images/Module00_headshots/headshot_diaorch.jpg" /></td>
+<td align="center"></td>
 </tr>
 <tr class="even">
-<td align="center"><strong>Crystal</strong></td>
 <td align="center"><strong>Dana</strong></td>
-<td align="center"><strong>Matt</strong></td>
-<td align="center"><strong>Rhema</strong></td>
-</tr>
-<tr class="odd">
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr class="even">
-<td align="center"><img
-src="images/Module00_headshots/headshot_dengkw.jpg" /></td>
-<td align="center"><img
-src="images/Module00_headshots/headshot_weishwu.jpg" /></td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>Kaiwen</strong></td>
-<td align="center"><strong>Weisheng</strong></td>
-<td align="center"></td>
+<td align="center"><strong>Grace</strong></td>
+<td align="center"><strong>Rucheng</strong></td>
 <td align="center"></td>
 </tr>
 </tbody>
 </table>
 <p><br/></p>
-</div>
-<div id="workshop-sponsors" class="section level2">
-<h2>Workshop sponsors</h2>
-<div class="figure">
-<img src="images/Module00_sponsor_logos.png" alt="" />
-<p class="caption">Sponsors</p>
-</div>
-<ul>
-<li><p><a href="https://www.lib.umich.edu/">University of Michigan
-Library</a></p>
-<p>Our mission is to support, enhance, and collaborate in the
-instructional, research, and service activities of faculty, students,
-and staff, and contribute to the common good by collecting, organizing,
-preserving, communicating, sharing, and creating the record of human
-knowledge.</p></li>
-<li><p><a href="https://brcf.medicine.umich.edu/">Biomedical Research
-Core Facilities</a></p>
-<p>Biomedical Research Core Facilities (BRCF) helps researchers
-economically take advantage of the latest technology and collaborate
-with top experts in the field. Established in 1986, the BRCF was formed
-to offer centralized access to research services and equipment. <br/>
-<br/></p></li>
-</ul>
 </div>
 </div>
 <div id="code-of-conduct" class="section level1">
@@ -769,39 +732,13 @@ need clarification. <br/> <br/></li>
 <p><img src="images/Module00_arranged_screens.png?"
 alt="arranged screens" /> <br/> <br/></p>
 </div>
-</div>
-<div id="workshop-goals-and-topics" class="section level1">
-<h1>Workshop goals and topics</h1>
-<ul>
-<li><p>By the end of the workshop, attendees will be able to</p>
-<ul>
-<li>Transform raw sequencing data into annotated differential expression
-values using a suite of open-source tools.</li>
-<li>Identify common data quality problems and understand their impact
-and possible mitigations</li>
-<li>Visualize differential expression data in RStudio plots.</li>
-</ul></li>
-<li><p>This workshop is targeted toward researchers who would like to be
-able to run RNA-Seq analysis on their own. It assumes a very basic
-familiarity with genetics, the command line, and R or R-Studio.</p></li>
-<li><p>The first day will be a mix of hands-on content and lecture-style
-components, while the second day will primarily be a hands-on
-experience.</p></li>
-<li><p>Please let us know if there is anything we can do to improve the
-workshop experience.</p></li>
-<li><p>Our purpose is not to be exhaustive, there is a lot that we
-cannot cover in the allotted time, and we don’t expect anyone to be an
-expert at the end of the workshop. But we hope you will have a
-familiarity with key concepts, data types, tools, and how they all
-connect to one another in the service of a biological question.</p></li>
-</ul>
 <div id="rna-seq-demystified-starting-with-the-end-in-mind"
 class="section level2">
 <h2>RNA-Seq Demystified: starting with the end in mind</h2>
 <p><img src="images/Module00_top_down.jpg" /> <br/> <br/></p>
 <div id="workshop-topics-at-a-glance" class="section level3">
 <h3>Workshop topics at a glance</h3>
-<p><img src="images/wayfinder/wayfinder-01.png" /></p>
+<p><img src="images/wayfinder/slides/Slide1.png" /></p>
 </div>
 </div>
 </div>
@@ -812,6 +749,45 @@ class="section level2">
 <li></li>
 </ul>
 <hr />
+</div>
+<div id="thank-you-to-our-sponsorscontributors" class="section level1">
+<h1>Thank you to our sponsors/contributors</h1>
+<p><img src="images/Module00_sponsor_logos.png" /></p>
+<div id="um-brcf-bioinformatics-core" class="section level2">
+<h2><a href="https://brcf.medicine.umich.edu/bioinformatics"
+target="_blank">UM BRCF Bioinformatics Core</a></h2>
+<ul>
+<li>The University of Michigan BRCF Bioinformatics Core is a team of
+analysts that help researchers <strong>design, analyze, and
+interpret</strong> high-throughput genomics experiments.</li>
+<li>Last year we helped about 60 researchers design and execute about
+100 projects including gene expression, epigenetic, variant
+identification, functional enrichment and many other kinds of
+analyses.</li>
+<li>We provide letters of support for grant proposals.</li>
+<li>We are creating a series of bioinformatics-focused workshops.</li>
+</ul>
+</div>
+<div id="university-of-michigan-library" class="section level2">
+<h2><a href="https://www.lib.umich.edu/" target="_blank">University of
+Michigan Library</a></h2>
+<p>Our mission is to support, enhance, and collaborate in the
+instructional, research, and service activities of faculty, students,
+and staff, and contribute to the common good by collecting, organizing,
+preserving, communicating, sharing, and creating the record of human
+knowledge.</p>
+</div>
+<div id="biomedical-research-core-facilities" class="section level2">
+<h2><a href="https://brcf.medicine.umich.edu/"
+target="_blank">Biomedical Research Core Facilities</a></h2>
+<p>Biomedical Research Core Facilities (BRCF) helps researchers
+economically take advantage of the latest technology and collaborate
+with top experts in the field. Established in 1986, the BRCF was formed
+to offer centralized access to research services and equipment. <br/>
+<br/></p>
+</div>
+<div id="acknowledgements" class="section level2">
+<h2>Acknowledgements</h2>
 <ul>
 <li><p>This workshop content is licensed under a <a
 href="https://creativecommons.org/licenses/by/4.0/">Creative Commons
@@ -834,6 +810,7 @@ Attribution license (CC BY 4.0)</a>, which permits unrestricted use,
 distribution, and reproduction in any medium, provided the original
 author and source are credited.</p></li>
 </ul>
+</div>
 </div>
 
 

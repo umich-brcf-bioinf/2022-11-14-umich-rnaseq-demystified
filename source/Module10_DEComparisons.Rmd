@@ -1,5 +1,5 @@
 ---
-title: "Module 10: Differential Expression Results"
+title: "Module 10: DE Testing"
 author: "UM Bioinformatics Core"
 date: "`r Sys.Date()`"
 output:
@@ -50,12 +50,9 @@ library(dplyr)
 
 Now we test for differential expression between our groups of interest and return a table of results.
 
-![](./images/wayfinder/wayfinder-10.png){width=75%}
+![](./images/wayfinder/wayfinder-DEComparisons.png){width=75%}
 
 ---
-
-> # Question {.unlisted .unnumbered}
-> Before we start, what do you think is the most challenging part of a differential expression analysis? Post in the thread on Slack.
 
 # Generating DE results
 
