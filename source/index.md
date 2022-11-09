@@ -21,15 +21,15 @@ body, td {
 |  9:00 | [Introductions and Startup](Module00_Introduction.html) |
 |  9:30 | **Sequence QC:** |
 |       | &nbsp;&nbsp;&nbsp;&nbsp;[Warming Up](Module01_Warming_Up.html) |
-|       | &nbsp;&nbsp;&nbsp;&nbsp;[Quality Control (FASTQs)](Module02a_Sequence_QC.html) |
-|       | &nbsp;&nbsp;&nbsp;&nbsp;[Trimming and MultiQC](Module02b_Trimming.html) |
+|       | &nbsp;&nbsp;&nbsp;&nbsp;[Sequence QC](Module02a_Sequence_QC.html) |
+|       | &nbsp;&nbsp;&nbsp;&nbsp;[Trimming](Module02b_Trimming.html) |
 | 11:00 | Break |
 | 11:15 | **Alignment:** |
-|       | &nbsp;&nbsp;&nbsp;&nbsp;[Reference genomes](Module03a_Reference_Genomes.html) |
+|       | &nbsp;&nbsp;&nbsp;&nbsp;[Reference Genomes](Module03a_Reference_Genomes.html) |
 |       | &nbsp;&nbsp;&nbsp;&nbsp;[Alignment](Module03b_Alignment.html) |
 |       | **Quantification:** |
-|       | &nbsp;&nbsp;&nbsp;&nbsp;[Count matrix / Alignment QC](Module04_Alignment_QC_and_Quantification.html) |
-|       | &nbsp;&nbsp;&nbsp;&nbsp;[Additional details and exercise](Module05_Additional_Details.html) |
+|       | &nbsp;&nbsp;&nbsp;&nbsp;[Alignment QC and Quantification](Module04_Alignment_QC_and_Quantification.html) |
+|       | &nbsp;&nbsp;&nbsp;&nbsp;[Additional Details](Module05_Additional_Details.html) |
 |  1:00 | Day 1 concludes |
 #### Day 2 (Chris & Raymond)
 | | |

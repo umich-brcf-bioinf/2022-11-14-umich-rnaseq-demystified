@@ -1,5 +1,5 @@
 ---
-title: "Day 1 - Module 03: Reference Genomes"
+title: "Module 03a: Reference Genomes"
 author: "UM Bioinformatics Core"
 output:
         html_document:
@@ -9,7 +9,7 @@ output:
             toc: true
             toc_depth: 4
             toc_float: true
-            number_sections: true
+            number_sections: false
             fig_caption: true
             markdown: GFM
             code_download: true

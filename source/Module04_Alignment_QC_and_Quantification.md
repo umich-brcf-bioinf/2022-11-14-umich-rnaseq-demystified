@@ -1,5 +1,5 @@
 ---
-title: "Day 1 - Module 05: MultiQC and Counts"
+title: "Module 04: Alignment QC and Quantification"
 author: "UM Bioinformatics Core"
 output:
         html_document:
@@ -9,7 +9,7 @@ output:
             toc: true
             toc_depth: 4
             toc_float: true
-            number_sections: true
+            number_sections: false
             fig_caption: true
             markdown: GFM
             code_download: true
@@ -23,7 +23,7 @@ pre {
 }
 </style>
 
-# MultiQC, Count Matrix
+# Alignment QC, MultiQC, and Count Matrix
 
 In this module, we will learn:
 
@@ -154,7 +154,7 @@ multiqc --outdir out_multiqc_all  .
 
 Before starting our breakout exercise, we should make sure that we are on the same page. Follow the link below:
 
-[Link to report transfer breakout exercise](Module05a_breakout03_ex.html)
+[Link to report transfer breakout exercise](Module04_breakout03_ex.html)
 
 
 <br>

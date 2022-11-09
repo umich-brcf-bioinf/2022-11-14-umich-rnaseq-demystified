@@ -1,5 +1,5 @@
 ---
-title: "Day 1 - Module 05: Additional Details"
+title: "Module 05: Additional Details"
 author: "UM Bioinformatics Core"
 output:
         html_document:
@@ -9,7 +9,7 @@ output:
             toc: true
             toc_depth: 4
             toc_float: true
-            number_sections: true
+            number_sections: false
             fig_caption: true
             markdown: GFM
             code_download: true
@@ -245,7 +245,7 @@ conda deactivate
 
 Before starting our breakout exercise, we should make sure that we are on the same page. Follow the link below:
 
-[Conda create exercise](Module05b_breakout04_ex.html)
+[Conda create exercise](Module05_breakout04_ex.html)
 
 <br>
 <br>

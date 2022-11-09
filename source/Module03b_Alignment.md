@@ -1,5 +1,5 @@
 ---
-title: "Day 1 - Module 04: Alignment"
+title: "Module 03b: Alignment"
 author: "UM Bioinformatics Core"
 output:
         html_document:
@@ -9,7 +9,7 @@ output:
             toc: true
             toc_depth: 4
             toc_float: true
-            number_sections: true
+            number_sections: false
             fig_caption: true
             markdown: GFM
             code_download: true
@@ -188,7 +188,7 @@ rsem-calculate-expression --star --num-threads 1 --star-gzipped-read-file --star
 
 Before starting our breakout exercise, we should make sure that we are on the same page. Follow the link below:
 
-[Link to alignment breakout exercise](Module04_breakout02_ex.html)
+[Link to alignment breakout exercise](Module03b_breakout02_ex.html)
 
 <br>
 <br>

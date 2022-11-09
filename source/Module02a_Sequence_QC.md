@@ -1,5 +1,5 @@
 ---
-title: "Day 1 - Module 02: QC"
+title: "Module 02a: Sequence QC"
 author: "UM Bioinformatics Core"
 output:
         html_document:
@@ -9,7 +9,7 @@ output:
             toc: true
             toc_depth: 4
             toc_float: true
-            number_sections: true
+            number_sections: false
             fig_caption: true
             markdown: GFM
             code_download: true
@@ -23,7 +23,7 @@ pre {
 }
 </style>
 
-# QC
+# Sequence QC and FASTQ Files
 
 In this Quality Control (QC) module, we will learn:
 
