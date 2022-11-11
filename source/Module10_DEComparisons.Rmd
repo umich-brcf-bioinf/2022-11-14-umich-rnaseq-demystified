@@ -54,28 +54,47 @@ Now we test for differential expression between our groups of interest and retur
 
 ---
 
-# Generating DE results
+# Testing for DE
 
-Now that we have reviewed the plots by sample and determined that our data passed our quality control checks, specifically that the patterns we observe are likely due to our experimental treatments over technical or other confounding factors, we can focus on differential expression testing.
+Before showing the code for generating differential expression results, let's walk through some toy data and discuss our intuition, its limitations, and what we can do to formalize our thought around determining if a gene is differentially expressed.
 
-This illustration from the HCB training materials illustrates the basis of the differential expression procedure, where our goal is to compare the distribution of an expressed gene across samples in each treatment groups.
-![*Image credit: Paul Pavlidis, UBC*](./images/de_theory_corrected.png)
+Let's get a sense for our intuition by looking at expression boxplots for a few "genes" where we've made up the data. In each plot, we are comparing the expression levels (on the y-axis) for samples (each point) representing a WT (red) and KO (teal) condition. The boxplot shows the 25% - 75% distribution, along with outliers, with a bar representing the median value, and a black-crossed-point representing the mean.
 
-Only where the distributions of each group are sufficiently separated will a gene be considered differentially expressed. This is where having sufficient replicates to overcome within group variance is important, as the more replicates we have in each group the better we can determine the distributions of expression for each group.
+For the first example, we ask: Does the KO affect the expression of the gene?
 
-## DESeq2 statistical testing
+![](./images/Module10_stat_plot_Gene_3.png){width=75%}
 
-We have already fit our DESeq2 model, specifying our model as `~ condition` and our next step is to identify genes with significantly different expression between our contrasts of interest. To determine significance, a statistical test is required.
+It seems pretty clear that there is a large difference between the means of the two groups, and within-group spread is quite low. So the answer to the question is likely "Yes".
 
-The first step for any statistical test is to define the *null hypothesis*. In this case, the null hypothesis would be that there is no difference in the expression of a gene between two groups of samples, such as illustrated at the bottom of the first figure in this module. The next step is to use a statistical test to determine if, based on the observed data, the null hypothesis can be rejected.
+Consider a second example:
 
-To do this, [DESeq2 applies the Wald test](http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#theory-behind-deseq2) to compare between two groups. A Wald test statistic is computed as well as the probability that the observed value or more extreme test statistic would be observed. This probability is called the p-value of the test.
+![](./images/Module10_stat_plot_Gene_1.png){width=75%}
 
-If the p-value is smaller than a pre-defined threshold, we would reject the null hypothesis and state that there is evidence against the null, i.e. the gene is differentially expressed. However, if the p-value is larger than our threshold, we would *fail to reject* the null hypothesis, meaning that we lack evidence that the expression of this gene is different. Note, this is distinct from the assertion that the expression is the same in both groups.
+Here there isn't a large difference between the means of the two groups, and there is quite a bit of spread within-group. The answer here is likely "No".
 
-For a more detailed overview of the statistical comparisons , please refer to [this HBC tutorial](https://hbctraining.github.io/DGE_workshop/lessons/05_DGE_DESeq2_analysis2.html) or the [DESeq2 vignette](http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#theory-behind-deseq2).
+Finally, consider a third example:
 
-## Generating results
+![](./images/Module10_stat_plot_Gene_2.png){width=75%}
+
+The means are not so close to each other in this example, though there is still quite a bit of spread. This is example is perhaps less clear.
+
+Looking at all three of the hypothetical genes together, we see them in relation to one another and how they span the range from No, to Maybe?, to Definitely.
+
+![](./images/Module10_stat_plot.png)
+
+Consider needing to make this decision for 20,000 genes. Even if all the genes behaved in a clear-cut manner, that would take a lot of time (or a lot of graduate students). But there are probably lots of Gene 2s out there.
+
+**We need a formal, reproducible, way to make this decision!**
+
+There are many tools to model expression between the groups, we have chosen to focus on DESeq2, but know that a tool like edgeR is out there. Both tools are statistically sound approachees to modeling and testing for differential expression.
+
+With any statistical test, we need to clearly state what we are testing. For the toy data above, we assume that the KO doesn't affect the expression of any particular gene. Statisticians would call this the "null hypothesis". For the mouse data we're working with, the null hypothesis is that "there is no difference between the expression of the iron deficient (minus) and normal (plus) mice". The alternative is that there is a difference.
+
+For each gene, DESeq2 computes a "Wald statistic" which is a single number encapsulating the difference in the means and the spread of the groups. However, this number alone doesn't tell us how to decide if a gene is differentially expressed. We need a **second** number to give us an idea of how extreme that Wald statistic is among the distribution of Wald statistics, this is the "p-value".
+
+Imagine shuffling the KO and WT labels and recomputing the statistic over and over again. You'd get a distribution of statistics that would look similar to a normal curve. The p-value essentially tells you how likely you are to have seen the statistic you see by chance. So when we set a p-value = 0.05 as a threshold, we're saying, "there is a 5% I'd see something this extreme by chance". So the evidence is **strong**, but not **ironclad**.
+
+# Generating DE Results
 
 We can check what comparisons were automatically generated during fitting using the `resultsNames()` function.
 ```{r Results1}
@@ -115,23 +134,15 @@ head(alt_results_plus_vs_minus)
 This way of calling `results()` is especially helpful when the levels of the column of interest contain more than two levels because you can specify exactly which levels to test with little confusion.
 
 > # Question {.unlisted .unnumbered}
-> Why should we use values from this column instead of the 'pvalue' column? Post in the Slack thread.
+> Why should we use values from `padj` instead of the `pvalue`? Post in the Slack thread.
 
 ### Multiple hypothesis testing and FDR correction
 
-Each p-value is the result of a single test for a single gene. If we used the p-value directly from the Wald test with a significance cut-off of p < 0.05, that means there is a 5% chance it is a false positives.
+Each p-value is the result of a single test for a single gene. With a p-value < 0.05 significance cut-off, there is a 5% chance it is a false positive. The more genes we test, the greater chance we have of seeing a significant results by chance. **So if we are testing 20,000 genes for differential expression, we would expect to see ~1,000 significant genes just by chance.**
 
-The more genes we test, the greater chance we have of seeing a significant results. So if we are testing 20,000 genes for differential expression, we would expect to see ~1,000 significant genes just by chance.
+To address this we will correct for [multiple hypothesis testing](https://multithreaded.stitchfix.com/blog/2015/10/15/multiple-hypothesis-testing/) to reduce the number of false positives. While there are a few approaches, the default method is the False Discovery Rate (FDR) ([Benjamini and Hochberg (1995)](https://rss.onlinelibrary.wiley.com/doi/10.1111/j.2517-6161.1995.tb02031.x)).
 
-This is the multiple testing problem and is problematic because we would need to sift through our “significant” genes to identify which ones are true positives.
-
-To address this we need to correct for [multiple hypothesis testing](https://multithreaded.stitchfix.com/blog/2015/10/15/multiple-hypothesis-testing/) to reduce the number of false positives, and while there are a few common approaches, the default method is False Discovery Rate(FDR) (aka: Benjamini-Hochberg correction) which is symbolized as 'BH' in DESeq2.
-
-[Benjamini and Hochberg (1995)](https://rss.onlinelibrary.wiley.com/doi/10.1111/j.2517-6161.1995.tb02031.x) defined the concept of FDR and created an algorithm to control it below a specified level. An interpretation of the BH method is implemented in DESeq2 in which genes are ranked by p-value, then each ranked p-value is multiplied by the number of total tests divided by rank.
-
-**Note**: From the `results` function help page and [HBC tutorial that includes overview of multiple hypothesis correction](https://hbctraining.github.io/DGE_workshop/lessons/05_DGE_DESeq2_analysis2.html), we can change the multiple hypothesis correction method to an alternative option using the `pAdjustMethod =` argument.
-
-The default FDR rate cutoff for DESeq2 is `alpha = 0.05`. By setting the cutoff to < 0.05, we expect that the proportion of false positives amongst our differentially expressed genes is now controlled to 5%. For example, if we call 500 genes as differentially expressed with this FDR cutoff, we expect only 25 of them to be false positives. DESeq2 vignette's includes a [further discussion of filtering and multiple testing](http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#independent-filtering-and-multiple-testing)
+The default FDR rate cutoff for DESeq2 is 0.05, meaning the proportion of false positives amongst our differentially expressed genes is controlled to 5%. So if we call 500 genes as differentially expressed with this FDR cutoff, we expect only 25 of them to be false positives. DESeq2 vignette's includes a [further discussion of filtering and multiple testing](http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#independent-filtering-and-multiple-testing).
 
 > # Note on `padj` values set to NA {.unlisted .unnumbered}
 >
