@@ -14,7 +14,7 @@
 
 <title>RNA-Seq Demystified Workshop</title>
 
-<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
@@ -151,11 +151,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -184,8 +188,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -193,16 +197,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -473,9 +470,6 @@ and possible mitigations</li>
 <li><p>This workshop is targeted toward researchers who would like to be
 able to run RNA-Seq analysis on their own. It assumes a very basic
 familiarity with genetics, the command line, and R or R-Studio.</p></li>
-<li><p>The first day will be a mix of hands-on content and lecture-style
-components, while the second day will primarily be a hands-on
-experience.</p></li>
 <li><p>Please let us know if there is anything we can do to improve the
 workshop experience.</p></li>
 <li><p>Our purpose is not to be exhaustive, there is a lot that we
@@ -648,7 +642,7 @@ Chat functionality.</li>
 </div>
 <ul>
 <li>Slack messages will be posted to the
-<strong>2022-08-rnaseq-demystified</strong> channel.<br />
+<strong>2022-11-rnaseq-demystified</strong> channel.<br />
 Click on the channel in the left pane (1) to select this channel.</li>
 <li>You can type in the <strong>message field</strong> (2); click
 <strong>send</strong> (3) to post your message to everyone.</li>
@@ -660,7 +654,8 @@ trigger the message menu and clicking the <strong>speech bubble</strong>
 </ul>
 <div id="exercise-responding-in-slack-thread" class="section level3">
 <h3>Exercise: Responding in Slack thread</h3>
-<p>What is one thing you hope to learn in this workshop? <br/> <br/></p>
+<p>In your RNA-Seq experiment, what do/did you hope to find? <br/>
+<br/></p>
 </div>
 </div>
 <div id="review-of-key-communication-patterns" class="section level2">
@@ -731,11 +726,6 @@ need clarification. <br/> <br/></li>
 </ul>
 <p><img src="images/Module00_arranged_screens.png?"
 alt="arranged screens" /> <br/> <br/></p>
-</div>
-<div id="rna-seq-demystified-starting-with-the-end-in-mind"
-class="section level2">
-<h2>RNA-Seq Demystified: starting with the end in mind</h2>
-<p><img src="images/Module00_top_down.jpg" /> <br/> <br/></p>
 <div id="workshop-topics-at-a-glance" class="section level3">
 <h3>Workshop topics at a glance</h3>
 <p><img src="images/wayfinder/slides/Slide1.png" /></p>
