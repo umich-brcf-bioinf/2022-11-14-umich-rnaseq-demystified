@@ -40,9 +40,6 @@ pre {
    RNA-Seq analysis on their own. It assumes a very basic familiarity with
    genetics, the command line, and R or R-Studio.
 
- - The first day will be a mix of hands-on content and lecture-style components,
-   while the second day will primarily be a hands-on experience.
-
  - Please let us know if there is anything we can do to improve the workshop experience.
 
  - Our purpose is not to be exhaustive, there is a lot that we cannot cover in
@@ -142,7 +139,7 @@ breakout room.
 
 ![Posting messages to Slack](images/Module00_slack.png)
 
-  - Slack messages will be posted to the **2022-08-rnaseq-demystified** channel.  
+  - Slack messages will be posted to the **2022-11-rnaseq-demystified** channel.  
     Click on the channel in the left pane (1) to select this channel.
   - You can type in the **message field** (2); click **send** (3) to
     post your message to everyone.
@@ -152,7 +149,7 @@ breakout room.
 
 
 ### Exercise: Responding in Slack thread
-What is one thing you hope to learn in this workshop?
+In your RNA-Seq experiment, what do/did you hope to find? 
 <br/>
 <br/>
 
@@ -187,11 +184,6 @@ It is important that you can see:
 <br/>
 
 
-
-## RNA-Seq Demystified: starting with the end in mind
-![](images/Module00_top_down.jpg)
-<br/>
-<br/>
 
 ### Workshop topics at a glance
 ![](images/wayfinder/wayfinder-Introduction.png)
