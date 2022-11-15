@@ -34,8 +34,10 @@ body, td {
 #### Day 2 (Chris & Raymond)
 | | |
 | :---  | :---- |
-|  9:00 | Review |
-|  9:20 | **Groups and Modeling:** |
+|  9:00 | Review and questions |
+|  9:20 | **Quantification**  (continued) |
+|       | **Part 2** |
+|       | **Groups and Modeling:** |
 |       | &nbsp;&nbsp;&nbsp;&nbsp;[DE Introduction](Module06_DEAnalysisSetup.html) |
 |       | &nbsp;&nbsp;&nbsp;&nbsp;[DE Initialization](Module07_DESeq2Init.html) |
 |       | &nbsp;&nbsp;&nbsp;&nbsp;[DE Normalization and Modeling](Module08_DESeq2DE.html) |

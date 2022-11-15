@@ -35,9 +35,7 @@ knitr_fig_path("11X-")
 
 ```{r Modules, eval=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
 library(DESeq2)
-library(ggplot2)
-library(tidyr)
-library(dplyr)
+library(tidyverse)
 library(ggrepel)
 library(pheatmap)
 library(RColorBrewer)
@@ -169,7 +167,7 @@ This is a lot more reasonable. More distant samples are a deeper blue, while mor
 ```{r DistanceHeatmapAnnotated}
 annotation_tbl = samplesheet_tbl %>%
     dplyr::select(sample, condition) %>%
-    column_to_rownames(var = 'sample')
+    tibble::column_to_rownames(var = 'sample')
 
 dist_heatmap = pheatmap(
     mat = dist_mat,

@@ -53,7 +53,7 @@ Plotting the expression values across all samples for the top variable genes in 
 
 # Exercise
 
-Create a heatmap of the top 50 most variable genes using the `pheatmap()` function.
+Create a heatmap of the top 50 most variable genes using the `pheatmap()` function using the rlog normalized data in the `rld` object.
 
 # Instructions
 

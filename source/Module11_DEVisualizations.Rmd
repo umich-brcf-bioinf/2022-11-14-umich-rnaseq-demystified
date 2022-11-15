@@ -84,7 +84,7 @@ fdr = 0.05
 To generate a general summary of the DE results, we can use the `summary` function to generate a basic summary by DESeq2.
 
 ```{r DESeq2Summary}
-summary(results_plus_vs_minus)
+summary(results_minus_vs_plus)
 ```
 
 However, this summary is simply a text output that we are unable to manipulate. Moreover, notice that the thresholds are not quite as we would like them.
@@ -100,40 +100,40 @@ We can use conditional statements to determine the number of genes that pass our
 Here is one possible answer:
 
 ```{r StatSigGenes2}
-sum(results_plus_vs_minus$padj < fdr & abs(results_plus_vs_minus$log2FoldChange) >= log2(fc), na.rm = TRUE)
+sum(results_minus_vs_plus$padj < fdr & abs(results_minus_vs_plus$log2FoldChange) >= log2(fc), na.rm = TRUE)
 ```
 </details>
 <br>
 
-Let's now create a new column in `results_plus_vs_minus` to record the significance "call" based on these thresholds. And let's separate the call by "Up" or "Down", noting that these are relative to our "Case" condition of "plus", or iron replete mice. There are many ways to accomplish this, but the following will work:
+Let's now create a new column in `results_minus_vs_plus` to record the significance "call" based on these thresholds. And let's separate the call by "Up" or "Down", noting that these are relative to our "Case" condition of "plus", or iron replete mice. There are many ways to accomplish this, but the following will work:
 
 First define all values as "NS" or "not significant":
 
 ```{r NSColumn}
-results_plus_vs_minus$call = 'NS'
-head(results_plus_vs_minus)
+results_minus_vs_plus$call = 'NS'
+head(results_minus_vs_plus)
 ```
 
 Next, determine the "Up" and "Down" indices:
 
 ```{r UpDownIndices}
-up_idx = results_plus_vs_minus$padj < fdr & results_plus_vs_minus$log2FoldChange > log2(fc)
-down_idx = results_plus_vs_minus$padj < fdr & results_plus_vs_minus$log2FoldChange < -log2(fc)
+up_idx = results_minus_vs_plus$padj < fdr & results_minus_vs_plus$log2FoldChange > log2(fc)
+down_idx = results_minus_vs_plus$padj < fdr & results_minus_vs_plus$log2FoldChange < -log2(fc)
 ```
 
 Last, use those indices to assign the correct "Up" or "Down" values to the correct indices, and look at the head of the result:
 
 ```{r CallColumn}
-results_plus_vs_minus$call[up_idx] = 'Up'
-results_plus_vs_minus$call[down_idx] = 'Down'
-head(results_plus_vs_minus)
+results_minus_vs_plus$call[up_idx] = 'Up'
+results_minus_vs_plus$call[down_idx] = 'Down'
+head(results_minus_vs_plus)
 ```
 
 Finally, looking ahead to when we plot these values as colors in a volcano plot, let's make this `call` column a factor and specify the level ordering:
 
 ```{r FactorCall}
-results_plus_vs_minus$call = factor(results_plus_vs_minus$call, levels = c('Up', 'Down', 'NS'))
-head(results_plus_vs_minus)
+results_minus_vs_plus$call = factor(results_minus_vs_plus$call, levels = c('Up', 'Down', 'NS'))
+head(results_minus_vs_plus)
 ```
 
 > # Tip {.unlisted .unnumbered}
@@ -142,7 +142,7 @@ head(results_plus_vs_minus)
 Now we are in a position to quickly summarize our differential expression results:
 
 ```{r TableCall}
-table(results_plus_vs_minus$call)
+table(results_minus_vs_plus$call)
 ```
 
 We see quickly how many genes were "Up" in iron replete, how many were "Down" in iron replete, and how many were not significant.
@@ -158,14 +158,14 @@ Let's coerce the `DataFrame` which was returned by `DESeq2::results()` into a `t
 ```{r PlotSetup2}
 # Use the rownames argument to create a new column of gene IDs
 # Also arrange by adjusted p-value
-results_plus_vs_minus = as_tibble(results_plus_vs_minus, rownames = 'id') %>% arrange(padj)
+results_minus_vs_plus = as_tibble(results_minus_vs_plus, rownames = 'id') %>% arrange(padj)
 ```
 
 Let's start with a very simple volcano plot that plots the `log2FoldChange` on the x-axis, and `-log10(padj)` on the y-axis.
 
 ```{r VolcanoPlot}
 # Initialize the plot, saving as object 'p' and specifying the plot type as 'geom_point'
-p = ggplot(results_plus_vs_minus, aes(x = log2FoldChange, y = -log10(padj))) +
+p = ggplot(results_minus_vs_plus, aes(x = log2FoldChange, y = -log10(padj))) +
     geom_point()
 p
 ```
@@ -174,7 +174,7 @@ This is a good start, but, as usual it's nice to add better labels to the plot w
 
 ```{r VolcanoPlot2}
 # Add plot labels and change the theme
-p = ggplot(results_plus_vs_minus, aes(x = log2FoldChange, y = -log10(padj))) +
+p = ggplot(results_minus_vs_plus, aes(x = log2FoldChange, y = -log10(padj))) +
     geom_point() +
     theme_bw() +
     labs(
@@ -216,7 +216,7 @@ You may be interested in identifying only the genes that pass your significance 
 *Note: The tidyverse functions you learned in Software Carpentry could also be alternatively used here.*
 
 ```{r ConditionalSubset}
-res_sig = results_plus_vs_minus[results_plus_vs_minus$call != 'NS', ]
+res_sig = results_minus_vs_plus[results_minus_vs_plus$call != 'NS', ]
 head(res_sig)
 dim(res_sig)
 ```
@@ -262,28 +262,28 @@ Now that we have the ENSEMBL information and a gene symbol to match to our resul
 
 **Note**: For additional information regarding bioMart, please consult the [ENSEMBL bioMart vignette](https://bioconductor.org/packages/release/bioc/vignettes/biomaRt/inst/doc/accessing_ensembl.html) or the broader [Bioconductor Annotation Resources vignette ](http://bioconductor.org/packages/devel/workflows/vignettes/annotation/inst/doc/Annotation_Resources.html).
 
-Look at the two data frames that are going to be needed: `id_mapping` and `results_plus_vs_minus`.
+Look at the two data frames that are going to be needed: `id_mapping` and `results_minus_vs_plus`.
 
 ```{r preview_tables}
 head(id_mapping)
-head(results_plus_vs_minus)
+head(results_minus_vs_plus)
 ```
 
-We want to match the `id` column of `results_plus_vs_minus` to the `ensembl_gene_id` column of `id_mapping`, and once that match is found, we want to extract the `external_gene_name` column of `id_mapping` to get the gene symbol. Next, look at the documentation for `dplyr::left_join()` and merge the `id_mapping` table into the `results_plus_vs_minus` table on the columns `ensembl_gene_id` and `external_gene_name`.
+We want to match the `id` column of `results_minus_vs_plus` to the `ensembl_gene_id` column of `id_mapping`, and once that match is found, we want to extract the `external_gene_name` column of `id_mapping` to get the gene symbol. Next, look at the documentation for `dplyr::left_join()` and merge the `id_mapping` table into the `results_minus_vs_plus` table on the columns `ensembl_gene_id` and `external_gene_name`.
 
 ```{r left_join}
-results_plus_vs_minus_annotated = results_plus_vs_minus %>%
+results_minus_vs_plus_annotated = results_minus_vs_plus %>%
     left_join(id_mapping, by = c('id' = 'ensembl_gene_id'))
-head(results_plus_vs_minus_annotated)
+head(results_minus_vs_plus_annotated)
 ```
 
 We can use some of the `tidyverse` functions we've encountered previously to rename the `external_gene_name` column to `symbol` and to move it into the second column position? Hint: Because of the order of the packages we may have loaded, we'll use `dplyr::rename()` and `dplyr::select()` instead of just the `select()` function. We can discuss this in a moment.
 
 ```{r rename_rearrange}
-results_plus_vs_minus_annotated = results_plus_vs_minus_annotated %>%
+results_minus_vs_plus_annotated = results_minus_vs_plus_annotated %>%
     dplyr::rename('symbol' = 'external_gene_name') %>%
     dplyr::select(id, symbol, everything())
-results_plus_vs_minus_annotated
+results_minus_vs_plus_annotated
 ```
 
 And now we have our differential expression results annotated with gene symbols, which can help in the interpretation of the results, and can be used in downstream analysis such as functional analysis.
@@ -298,10 +298,10 @@ A key aspect of our analysis is preserving the relevant datasets for both our re
 Next we'll write out our DE results, now that we've added information to the table to help us interpret the results, and share with collaborators.
 
 ```{r DEResultsOuput, eval = FALSE}
-write.csv(results_plus_vs_minus,
+write.csv(results_minus_vs_plus,
           row.names = FALSE,
           na = ".",
-          file="outputs/tables/DE_results_plus_vs_minus.csv")
+          file="outputs/tables/DE_results_minus_vs_plus.csv")
 ```
 
 ## Count tables
