@@ -76,7 +76,11 @@ In this exercise, we'll use a special tool that enhances Conda, called Mamba. It
 <br>
 
 ```
-# Create a conda environment with Cutadapt, FastQC, MultiQC, STAR, and RSEM.
+# Check to see if mamba is installed
+which mamba
+# If you don't have mamba installed, you can install it to your base conda environment
+conda install -c conda-forge mamba
+# Use mamba to create an environment with Cutadapt, FastQC, MultiQC, STAR, and RSEM.
 mamba create -n RSD_environment -c conda-forge -c bioconda cutadapt fastqc multiqc star rsem
 # Activate the environment and use which to check for software presence
 conda activate RSD_environment
