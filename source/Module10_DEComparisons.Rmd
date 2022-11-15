@@ -111,7 +111,7 @@ head(results_minus_vs_plus)
 In the results table, the row names are gene identifiers (in theis case ENSEMBL IDs because that's what the GTF we used in the call to RSEM+STAR used), and the columns have the following definitions:
 
 1. `baseMean` is the average of the normalized count values, divided by size factors and taken over all samples, and can be interpreted as the relative expression level of that gene across all samples.
-2. `log2FoldChange` is the log2 transformed ratio of the expression of the numerator group (first group) over the denominator group (second group after "vs"). Note that in our comparison, the `log2FoldChange` column compares the expression of the numerator group (`plus`) over the denominator group (`minus`). If the value is positive, that means the expression of that gene is greater across the `plus` samples than across the `minus` samples. If the value is negative, that means the expression of that gene is greater across the `minus` samples.
+2. `log2FoldChange` is the log2 transformed ratio of the expression of the numerator group (first group) over the denominator group (second group after "vs"). Note that in our comparison, the `log2FoldChange` column compares the expression of the numerator group (`minus`) over the denominator group (`plus`). If the value is positive, that means the expression of that gene is greater across the `minus` samples than across the `plus` samples. If the value is negative, that means the expression of that gene is greater across the `minus` samples.
 3. `lfcSE` is the standard error for the log2 fold change estimate.
 4. `stat` is the calculated Wald statistic for that gene.
 5. `pvalue` is the *nominal* significance for that gene.
