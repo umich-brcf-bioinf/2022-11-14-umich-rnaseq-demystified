@@ -92,7 +92,7 @@ With any statistical test, we need to clearly state what we are testing. For the
 
 For each gene, DESeq2 computes a "Wald statistic" which is a single number encapsulating the difference in the means and the spread of the groups. However, this number alone doesn't tell us how to decide if a gene is differentially expressed. We need a **second** number to give us an idea of how extreme that Wald statistic is among the distribution of Wald statistics, this is the "p-value".
 
-Imagine shuffling the KO and WT labels and recomputing the statistic over and over again. You'd get a distribution of statistics that would look similar to a normal curve. The p-value essentially tells you how likely you are to have seen the statistic you see by chance. So when we set a p-value = 0.05 as a threshold, we're saying, "there is a 5% I'd see something this extreme by chance". So the evidence is **strong**, but not **ironclad**.
+Imagine shuffling the KO and WT labels and recomputing the statistic over and over again. You'd get a distribution of statistics that would look similar to a normal curve. The p-value essentially tells you how likely you are to have seen the statistic you see by chance. So when we set a p-value = 0.05 as a threshold, we're saying, "there is a 5% chance I'd see something this extreme when there was actually no effect". So the evidence is **strong**, but not **ironclad**.
 
 # Generating DE Results
 
@@ -104,8 +104,8 @@ resultsNames(dds)
 There is only the one comparison in the results, so we will refer to it in the `name` parameter of the `results()` function, and assign the result as an object.
 
 ```{r SetsResult}
-results_plus_vs_minus = results(dds, name = 'condition_plus_vs_minus')
-head(results_plus_vs_minus)
+results_minus_vs_plus = results(dds, name = 'condition_minus_vs_plus')
+head(results_minus_vs_plus)
 ```
 
 In the results table, the row names are gene identifiers (in theis case ENSEMBL IDs because that's what the GTF we used in the call to RSEM+STAR used), and the columns have the following definitions:
@@ -127,8 +127,8 @@ There are multiple ways to specify the test to be done using the `results()` fun
 So an alternative way to test the same contrast as above (i.e. `plus` / `minus`) is:
 
 ```{r SetsResultsAlt}
-alt_results_plus_vs_minus = results(dds, contrast = c('condition', 'plus', 'minus'))
-head(alt_results_plus_vs_minus)
+alt_results_minus_vs_plus = results(dds, contrast = c('condition', 'minus', 'plus'))
+head(alt_results_minus_vs_plus)
 ```
 
 This way of calling `results()` is especially helpful when the levels of the column of interest contain more than two levels because you can specify exactly which levels to test with little confusion.

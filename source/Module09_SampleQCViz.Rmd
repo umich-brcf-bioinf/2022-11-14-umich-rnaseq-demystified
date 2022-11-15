@@ -63,7 +63,7 @@ Prior to testing for differential expression between our comparisons of interest
 
 # QC Visualizations
 
-We have discussed some aspects of quality control assessment at the sequencing data level. Today we will outline sample-level and gene-level quality control assessments to determine what we might expect for our differential expression comparisons.
+We have discussed some aspects of quality control assessment at the sequencing level. Today we will outline sample-level and gene-level quality control assessments to determine what we might expect for our differential expression comparisons.
 
 To do this, we will first assess the similarity of our samples by using principal component analysis (PCA). This will allow us to determine how well patterns in the data fits our expectations from the experiments design and possible sources of variation.
 
@@ -82,11 +82,9 @@ This image from
 
 ## Interpreting PCA plots
 
-For most bulk RNA-seq experiments, we expect the majority of the total variance to be explained by the first two or three principal components.
+For most bulk RNA-seq experiments, we expect the majority of the total variance to be explained by the first two or three principal components. In the following plot, principal component 1 (PC1) explains ~80% of the variance in our data while principal component 2 (PC2) explains ~12% of the variance, which fits that expections.
 
 ![](images/PCAplot_Fancy_rlog_ko.Tx.png){width=75%}
-
-In this plot, which we will generate for our data later, principal component 1 (PC1) explains ~80% of the variance in our data while principal component 2 (PC2) explains ~12% of the variance, which fits that expections.
 
 > # Question {.unlisted .unnumbered}
 >

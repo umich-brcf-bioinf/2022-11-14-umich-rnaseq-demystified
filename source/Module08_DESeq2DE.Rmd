@@ -60,7 +60,7 @@ Two common factors that need to be accounted for during normalization are **sequ
 
 * **Sequencing depth** normalization is necessary to account for the proportion of reads per gene expected for more deeply sequenced samples (like in pink below) versus a less deeply sequenced sample (like in green below).
 
-![*Note that each pink or green rectangle represents an aligned read, with reads spanning an intron connected by a dashed line. Figure from [HBC  training materials](https://hbctraining.github.io/DGE_workshop/lessons/02_DGE_count_normalization.html)*](./images/normalization_methods_depth.png)
+![*Note that each pink or green rectangle represents an aligned read, with reads spanning an intron connected by a dashed line. Figure from [HBC  training materials](https://hbctraining.github.io/DGE_workshop/lessons/02_DGE_count_normalization.html)*](./images/normalization_methods_depth.png){width=75%}
 
 * **Gene length** normalization may also be necessary if comparing between different genes, since genes of different lengths have different probabilities of generating fragments that end up in the library.
 
@@ -109,7 +109,7 @@ The `DESeq()` function is actually doing three things automatically for us. It c
 2. Dispersion estimates to shrink the dispersions with `estimateDispersions(dds)`, and
 3. The Wald test statistics with `nbinomWaldTest(dds)`.
 
-The `resultsNames()` function returns the names of hte estimaed effects of the model.
+The `resultsNames()` function returns the names of the estimated effects of the model.
 
 ```{r FitModelStandardCheck1, eval=TRUE}
 resultsNames(dds)

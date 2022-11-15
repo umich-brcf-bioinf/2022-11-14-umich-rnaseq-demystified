@@ -121,7 +121,7 @@ Next, we'll format our table so that we have the appropriate data type (an order
 ```{r SamplesheetFactor}
 
 samplesheet$condition = factor(samplesheet$condition,
-                            levels = c('minus', 'plus'))
+                            levels = c('plus', 'minus'))
 
 unique(samplesheet$condition)
 ```
