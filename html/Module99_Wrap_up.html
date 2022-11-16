@@ -14,7 +14,7 @@
 
 <title>RNA-seq Demystified Workshop</title>
 
-<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/paper.min.css" rel="stylesheet" />
@@ -151,11 +151,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -184,8 +188,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -193,16 +197,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -389,13 +386,13 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Module06_DEAnalysisSetup.html">Introduction to DESeq2</a>
+      <a href="Module06_DEAnalysisSetup.html">DE Introduction</a>
     </li>
     <li>
-      <a href="Module07_DESeq2Init.html">DESeq2 Initialization</a>
+      <a href="Module07_DESeq2Init.html">DE Initialization</a>
     </li>
     <li>
-      <a href="Module08_DESeq2DE.html">Count Normalizations and DESeq2 model fitting</a>
+      <a href="Module08_DESeq2DE.html">DE Normalization and Modeling</a>
     </li>
   </ul>
 </li>
@@ -407,7 +404,7 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Module09_SampleQCViz.html">Sample Visualizations for QC</a>
+      <a href="Module09_SampleQCViz.html">Sample QC</a>
     </li>
   </ul>
 </li>
@@ -419,10 +416,10 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Module10_DEComparisons.html">Comparisons</a>
+      <a href="Module10_DEComparisons.html">DE Testing</a>
     </li>
     <li>
-      <a href="Module11_DEVisualizations.html">DE Visiualization and Annotation</a>
+      <a href="Module11_DEVisualizations.html">DE Visualization and Annotation</a>
     </li>
     <li>
       <a href="Module11X_BonusContent.html">Bonus content</a>
@@ -476,11 +473,11 @@ bulk RNA-Seq data.</p>
 <h2>Housekeeping</h2>
 <ul>
 <li><p>Please take our optional
-<a class="external" href="https://forms.gle/MicfgHWzBkZyNiy97" target="_blank">post-workshop
-survey</a> (5-10 minutes)</p>
-<ul>
-<li>8/22 10-12 ET: “Office hours”</li>
-</ul></li>
+<a class="external" href="https://forms.gle/4Z8HjJRw4PKQMEti7" target="_blank">post-workshop
+survey</a> (5-10 minutes)</p></li>
+<li><p>11/18 11-12 ET:
+<a class="external" href="https://docs.google.com/forms/d/e/1FAIpQLScXNTuQUG6R5j6_Fs7qRmqdS_shCHnSJbnp03ig56VdA0TfPg/viewform" target="_blank">Virtual
+office hours</a></p></li>
 <li><p>We will email you a link to the final session recordings by next
 week.</p></li>
 <li><p>The website/notes for this workshop will be available.</p></li>
@@ -497,7 +494,7 @@ days.</p></li>
 <h4>Workshop environment</h4>
 <ul>
 <li><p>BASH/RStudio workshop compute environment will be available until
-8/24.</p>
+11/30.</p>
 <ul>
 <li><em>Please save all your R scripts now</em> so that we can
 “right-size” the compute environment immediately following today’s
@@ -519,10 +516,10 @@ internet speeds it could take while.</li>
 <h4>Installing software locally</h4>
 <ul>
 <li>You can install necessary programs to run programs locally. Note
-that for typical data, the compute intensive steps (Day 1&amp;2) assume
-your computer has powerful compute (many CPUs and lots of RAM) and
-sizable storage capacity. (i.e. It may not be practical to run these on
-your laptop.)</li>
+that for typical data, the compute intensive steps (Day 1) assume your
+computer has powerful compute (many CPUs and lots of RAM) and sizable
+storage capacity. (i.e. It may not be practical to run these on your
+laptop.)</li>
 <li>Installing bioinformatics software is non-trivial and comprehensive
 instructions to setup a complete compute environment are outside the
 scope of this workshop. (We are considering offering a Computational
@@ -580,7 +577,7 @@ Resources to consider:
 <a href="https://brcf.medicine.umich.edu/cores/bioinformatics-core/training/" target="_blank">training
 resources/workshops</a></li>
 <li>Notes on Bash and R from the recent
-<a href="https://umich-brcf-bioinf.github.io/2022-02-28-umich-computational-foundations/html/" target="_blank">Computational
+<a href="https://umich-brcf-bioinf.github.io/2022-10-31-umich-computational-foundations/html/" target="_blank">Computational
 Foundations Workshop</a>.<br/></li>
 <li>For more intro lessons and workshops in Bash / Git / R / Python :
 <a href="https://software-carpentry.org/lessons/" target="_blank">Software
@@ -644,18 +641,32 @@ src="images/Module00_headshots/headshot_damki.jpg" /></td>
 src="images/Module00_headshots/headshot_grkenney.jpg" /></td>
 <td align="center"><img
 src="images/Module00_headshots/headshot_diaorch.jpg" /></td>
-<td align="center"></td>
+<td align="center"><img
+src="images/Module00_headshots/headshot_rtagett.jpg" /></td>
 </tr>
 <tr class="even">
 <td align="center"><strong>Dana</strong></td>
 <td align="center"><strong>Grace</strong></td>
 <td align="center"><strong>Rucheng</strong></td>
+<td align="center"><strong>Becky</strong></td>
+</tr>
+<tr class="odd">
+<td align="center"><img
+src="images/Module00_headshots/headshot_weishwu.jpg" /></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center"><strong>Weisheng</strong></td>
+<td align="center"></td>
+<td align="center"></td>
 <td align="center"></td>
 </tr>
 </tbody>
 </table>
 <p><br/></p>
-<p>Thank you for participating on our workshop. We welcome your
+<p>Thank you for participating in our workshop. We welcome your
 questions and feedback now and in the future.</p>
 <p>Bioinformatics Workshop Team</p>
 <p><a
