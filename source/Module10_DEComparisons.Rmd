@@ -142,7 +142,7 @@ Each p-value is the result of a single test for a single gene. With a p-value < 
 
 To address this we will correct for [multiple hypothesis testing](https://multithreaded.stitchfix.com/blog/2015/10/15/multiple-hypothesis-testing/) to reduce the number of false positives. While there are a few approaches, the default method is the False Discovery Rate (FDR) ([Benjamini and Hochberg (1995)](https://rss.onlinelibrary.wiley.com/doi/10.1111/j.2517-6161.1995.tb02031.x)).
 
-The default FDR rate cutoff for DESeq2 is 0.05, meaning the proportion of false positives amongst our differentially expressed genes is controlled to 5%. So if we call 500 genes as differentially expressed with this FDR cutoff, we expect only 25 of them to be false positives. DESeq2 vignette's includes a [further discussion of filtering and multiple testing](http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#independent-filtering-and-multiple-testing).
+The default FDR rate cutoff for our analyses is 0.05, meaning the proportion of false positives amongst our differentially expressed genes is controlled to 5%. So if we call 500 genes as differentially expressed with this FDR cutoff, we expect only 25 of them to be false positives. DESeq2 vignette's includes a [further discussion of filtering and multiple testing](http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html#independent-filtering-and-multiple-testing).
 
 > # Note on `padj` values set to NA {.unlisted .unnumbered}
 >
